@@ -36,6 +36,10 @@ export function updateCard(id, card) {
    return httpService.put(`/cards/${id}`, card);
 }
 
+export function addCardToFavorites(id) {
+   return httpService.patch(`/cards/${id}`);
+}
+
 const cardsService = {
    createCard,
    getAll,
@@ -43,6 +47,7 @@ const cardsService = {
    getCard,
    deleteCard,
    updateCard,
+   addCardToFavorites,
 };
 
 export default cardsService;
