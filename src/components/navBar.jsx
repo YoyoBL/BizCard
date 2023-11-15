@@ -1,0 +1,98 @@
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/auth.context";
+import { useColorMode } from "../hooks/useColorMode";
+
+const NavBar = ({ value, onChange = () => {} }) => {
+   const { user } = useAuth();
+   const { switchColorMode } = useColorMode();
+
+   return (
+      <nav className="navbar navbar-expand-sm  shadow-sm">
+         <div className="container">
+            <Link to="/" className="navbar-brand">
+               Biz<i className="bi bi-person-vcard"></i>Card
+            </Link>
+            <button
+               className="navbar-toggler"
+               type="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#main-navbar"
+            >
+               <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="main-navbar">
+               <ul className="navbar-nav me-auto mb-2 mb-sm-0">
+                  <li className="nav-item">
+                     <NavLink to="/about" className="nav-link">
+                        About
+                     </NavLink>
+                  </li>
+                  {user?.isBusiness && (
+                     <li className="nav-item">
+                        <Link to={"/my-cards"} className="nav-link">
+                           My Cards
+                        </Link>
+                     </li>
+                  )}
+               </ul>
+
+               <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
+                  <li>
+                     <div className="position-relative d-flex">
+                        <input
+                           onChange={(e) => onChange(e.target.value)}
+                           value={value}
+                           className="form-control"
+                           type="text"
+                        />
+                        <i className="bi bi-search position-absolute end-0 p-2"></i>
+                     </div>
+                  </li>
+
+                  <li className="mx-3">
+                     <div className="form-check form-switch pt-2">
+                        <input
+                           onChange={switchColorMode}
+                           className="form-check-input"
+                           type="checkbox"
+                           role="switch"
+                        />
+                        <label
+                           className="form-check-label"
+                           htmlFor="flexSwitchCheckDefault"
+                        >
+                           <i className="bi bi-moon"></i>
+                        </label>
+                     </div>
+                  </li>
+                  {user ? (
+                     <>
+                        <li className="nav-item ">
+                           <NavLink to={"/sign-out"} className="nav-link">
+                              Sign out
+                           </NavLink>
+                        </li>
+                     </>
+                  ) : (
+                     <>
+                        <li className="nav-item">
+                           <NavLink to={"/sign-in"} className="nav-link">
+                              Sign in
+                           </NavLink>
+                        </li>
+                        <li className="nav-item">
+                           <NavLink to={"/sign-up"} className="nav-link">
+                              Sign up
+                           </NavLink>
+                        </li>
+                     </>
+                  )}
+               </ul>
+            </div>
+         </div>
+      </nav>
+   );
+};
+
+export default NavBar;
