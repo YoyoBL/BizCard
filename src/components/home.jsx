@@ -1,9 +1,9 @@
 import PageHeader from "./common/pageHeader";
 import Card from "./card";
-import { useGetAllCards } from "../hooks/useCards";
+import { useCards } from "../contexts/cards.context";
 
 const Home = ({ search = "" }) => {
-   const allCards = useGetAllCards();
+   const { allCards } = useCards();
 
    function displayCards() {
       if (search) {

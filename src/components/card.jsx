@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 
 import { useFavoriteCards } from "../hooks/useFavoriteCards";
+import { useCards } from "../contexts/cards.context";
 
 const Card = ({
    card: { _id, title, description, address, phone, image, likes },
 }) => {
-   const { favorite, handleAddFavorite } = useFavoriteCards({ _id, likes });
+   const { isFavorite, AddToFavorites } = useCards();
+
+   const favorite = isFavorite({ _id, likes });
 
    return (
       <div className="card px-0" style={{ width: "18rem" }}>
@@ -39,7 +42,7 @@ const Card = ({
             </Link>
             <Link to={`/my-cards/edit/${_id}`} className="card-link"></Link>
             <Link
-               onClick={() => handleAddFavorite(_id)}
+               onClick={() => AddToFavorites(_id)}
                className="text-muted  ms-auto"
             >
                <i

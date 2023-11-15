@@ -9,13 +9,16 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { AuthProvider } from "./contexts/auth.context";
+import { CardsProvider } from "./contexts/cards.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
    <React.StrictMode>
       <HashRouter>
          <AuthProvider>
-            <App />
+            <CardsProvider>
+               <App />
+            </CardsProvider>
          </AuthProvider>
       </HashRouter>
    </React.StrictMode>

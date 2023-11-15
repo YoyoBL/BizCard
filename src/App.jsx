@@ -15,6 +15,7 @@ import FavCards from "./components/favCards";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
+
    function handleSearchInputChange(e) {
       setSearchInput(e);
    }
