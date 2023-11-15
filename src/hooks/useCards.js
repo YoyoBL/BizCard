@@ -14,19 +14,19 @@ export function useGetAllCards() {
    return allCards;
 }
 
-export function useFavoriteCards() {
-   const [favCards, setFavCards] = useState([]);
-   useEffect(() => {
-      const getCards = async () => {
-         try {
-            const { data } = await cardsService.getAllMyCards();
-            setFavCards(data);
-         } catch (err) {
-            setFavCards(err);
-         }
-      };
+// export function useFavoriteCards() {
+//    const [favCards, setFavCards] = useState([]);
+//    useEffect(() => {
+//       const getCards = async () => {
+//          try {
+//             const { data } = await cardsService.getAllMyCards();
+//             setFavCards(data);
+//          } catch (err) {
+//             setFavCards(err);
+//          }
+//       };
 
-      getCards();
-   }, []);
-   return favCards;
-}
+//       getCards();
+//    }, []);
+//    return favCards;
+// }

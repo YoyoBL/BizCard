@@ -1,22 +1,11 @@
 import { Link } from "react-router-dom";
-import { addCardToFavorites } from "../services/cardsService";
-import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/auth.context";
+
+import { useFavoriteCards } from "../hooks/useFavoriteCards";
 
 const Card = ({
    card: { _id, title, description, address, phone, image, likes },
 }) => {
-   const [favorite, setFavorite] = useState(false);
-   const { user } = useAuth();
-   if (likes.includes(user._id) && !favorite) {
-      setFavorite((favorite) => true);
-   }
-
-   async function handleFavorite() {
-      const response = await addCardToFavorites(_id);
-      setFavorite((favorite) => !favorite);
-      console.log(response);
-   }
+   const { favorite, handleAddFavorite } = useFavoriteCards({ _id, likes });
 
    return (
       <div className="card px-0" style={{ width: "18rem" }}>
@@ -40,7 +29,8 @@ const Card = ({
                </ul>
             </div>
          </div>
-         <div className="card-footer">
+
+         <div className="card-footer hstack">
             <Link to={`/my-cards/delete/${_id}`} className="card-link">
                <i className="bi bi-trash3 text-danger"></i>
             </Link>
@@ -48,12 +38,15 @@ const Card = ({
                <i className="bi bi-pencil-square text-warning"></i>
             </Link>
             <Link to={`/my-cards/edit/${_id}`} className="card-link"></Link>
-            <Link onClick={handleFavorite} className="text-muted">
-               {favorite ? (
-                  <i className="bi bi-heart-fill text-danger"></i>
-               ) : (
-                  <i className="bi bi-heart"></i>
-               )}
+            <Link
+               onClick={() => handleAddFavorite(_id)}
+               className="text-muted  ms-auto"
+            >
+               <i
+                  className={`bi bi-heart${
+                     favorite ? "-fill text-danger" : ""
+                  }`}
+               ></i>
             </Link>
          </div>
       </div>
