@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/BizCard/static/css/main.787db7d6.css",
+    "main.js": "/BizCard/static/js/main.bf1729a9.js",
+    "static/js/787.e66666a5.chunk.js": "/BizCard/static/js/787.e66666a5.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/BizCard/static/media/bootstrap-icons.449ad8adf6ae0424b7ed.woff",
+    "static/media/bootstrap-icons.woff2?": "/BizCard/static/media/bootstrap-icons.dea24bf5a7646d8b84e7.woff2",
+    "index.html": "/BizCard/index.html",
+    "main.787db7d6.css.map": "/BizCard/static/css/main.787db7d6.css.map",
+    "main.bf1729a9.js.map": "/BizCard/static/js/main.bf1729a9.js.map",
+    "787.e66666a5.chunk.js.map": "/BizCard/static/js/787.e66666a5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.787db7d6.css",
+    "static/js/main.bf1729a9.js"
+  ]
+}
