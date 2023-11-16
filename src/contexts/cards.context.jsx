@@ -10,6 +10,7 @@ const cardsContext = createContext({
    isFavorite: () => {},
    isMyCard: () => {},
    AddToFavorites: () => {},
+   deleteCard: () => {},
 });
 
 export const CardsProvider = ({ children }) => {
@@ -17,7 +18,7 @@ export const CardsProvider = ({ children }) => {
    const [allCards, setAllCards] = useState([]);
 
    async function getAllCardsFromApi() {
-      const { data } = await cardsService.getAll();
+      const { data } = await cardsService.getAll().catch(() => {});
       setAllCards(data);
    }
 
@@ -36,7 +37,7 @@ export const CardsProvider = ({ children }) => {
    async function AddToFavorites(id) {
       const updatedCards = allCards.map((card) => {
          if (card._id === id) {
-            if (isFavorite(card)) {
+            if (isFavorite(card.likes)) {
                return {
                   ...card,
                   likes: card.likes.filter((like) => like !== user._id),
@@ -47,7 +48,13 @@ export const CardsProvider = ({ children }) => {
          return card;
       });
       setAllCards(updatedCards);
-      const response = await cardsService.addCardToFavorites(id);
+
+      await cardsService.addCardToFavorites(id).catch(() => {});
+   }
+
+   async function deleteCard(cardId) {
+      await cardsService.deleteCard(cardId).catch(() => {});
+      getAllCardsFromApi();
    }
 
    return (
@@ -55,10 +62,11 @@ export const CardsProvider = ({ children }) => {
          value={{
             user,
             allCards,
+            getAllCardsFromApi,
             isFavorite,
             isMyCard,
             AddToFavorites,
-            getAllCardsFromApi,
+            deleteCard,
          }}
       >
          {children}

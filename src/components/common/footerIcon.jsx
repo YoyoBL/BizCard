@@ -11,7 +11,7 @@ const FooterIcon = ({
          to={href}
          className={({ isActive }) =>
             `col d-flex flex-column text-decoration-none ${
-               isActive ? `text-${bsColorWhenActive}` : "text-black-50"
+               isActive ? `text-${bsColorWhenActive}` : "text-muted"
             }`
          }
       >

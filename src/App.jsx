@@ -12,6 +12,7 @@ import CardsCreate from "./components/cardsCreate";
 import CardDelete from "./components/cardDelete";
 import { useState } from "react";
 import FavCards from "./components/favCards";
+import MyCards from "./components/myCards";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
@@ -32,11 +33,18 @@ function App() {
                   path="/my-cards"
                   element={
                      <ProtectedRoute onlyBiz>
-                        <Home />
+                        <MyCards />
                      </ProtectedRoute>
                   }
                />
-               <Route path="/favorite-cards" element={<FavCards />} />
+               <Route
+                  path="/favorite-cards"
+                  element={
+                     <ProtectedRoute>
+                        <FavCards />
+                     </ProtectedRoute>
+                  }
+               />
                <Route
                   path="/create-card"
                   element={

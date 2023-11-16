@@ -5,16 +5,11 @@ import PageHeader from "./common/pageHeader";
 import { useCards } from "../contexts/cards.context";
 
 const FavCards = ({ search = "" }) => {
-   const { user } = useAuth();
    const { allCards, isFavorite } = useCards();
    const navigate = useNavigate();
 
-   if (!user) {
-      return navigate("/");
-   }
-
    function displayCards() {
-      const favorites = allCards.filter((card) => isFavorite(card));
+      const favorites = allCards.filter((card) => isFavorite(card.likes));
 
       if (search) {
          return allCards.map((card) => {

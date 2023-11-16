@@ -37,16 +37,16 @@ const NavBar = ({ value, onChange = () => {} }) => {
                   )}
                   {user?.isBusiness && (
                      <li className="nav-item">
-                        <Link to={"/my-cards"} className="nav-link">
+                        <NavLink to={"/my-cards"} className="nav-link">
                            My Cards
-                        </Link>
+                        </NavLink>
                      </li>
                   )}
                   {user?.isBusiness && (
                      <li className="nav-item">
-                        <Link to={"/create-card"} className="nav-link">
+                        <NavLink to={"/create-card"} className="nav-link">
                            Create card
-                        </Link>
+                        </NavLink>
                      </li>
                   )}
                </ul>

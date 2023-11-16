@@ -40,7 +40,7 @@ const CardsCreate = () => {
       validate: validateFormikUsingJoi({
          title: Joi.string().min(2).max(50).required(),
          subtitle: Joi.string().min(2).max(50).required(),
-         description: Joi.string().min(2).max(70).required(),
+         description: Joi.string().min(2).max(200).required(),
          phone: Joi.string()
             .min(9)
             .max(10)

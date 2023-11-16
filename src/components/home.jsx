@@ -24,7 +24,7 @@ const Home = ({ search = "" }) => {
             description="Here are all the cards our users created"
          />
 
-         <div className="row mt-3 gap-3">
+         <div className="row justify-content-evenly mt-3 gap-3">
             {!allCards.length ? <p>no cards...</p> : displayCards()}
          </div>
       </>
