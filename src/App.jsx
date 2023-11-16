@@ -62,7 +62,7 @@ function App() {
                <Route path="/sign-out" element={<SignOut redirect="/" />} />
             </Routes>
          </main>
-         <footer>
+         <footer className="sticky-bottom">
             <Footer />
          </footer>
       </div>

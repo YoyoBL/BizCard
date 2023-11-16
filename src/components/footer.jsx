@@ -1,11 +1,24 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
    return (
-      <div className="border-top py-2 text-center">
-         <span>
-            Real<i className="bi bi-geo-fill "></i>App
-         </span>
-         <span className="mx-2">&copy;</span>
-         <span>{new Date().getFullYear()}</span>
+      <div
+         id="footer"
+         className="d-flex
+          justify-content-center gap-5 m-0 border-top py-2 text-center bg-light"
+      >
+         <Link className="d-flex flex-column">
+            <i class="bi bi-heart-fill fs-3 "></i>
+            <span>Favorites</span>
+         </Link>
+         <Link className="d-flex flex-column">
+            <i class="bi bi-heart-fill fs-3 "></i>
+            <span>Favorites</span>
+         </Link>
+         <Link className="d-flex flex-column">
+            <i class="bi bi-heart-fill fs-3 "></i>
+            <span>Favorites</span>
+         </Link>
       </div>
    );
 };

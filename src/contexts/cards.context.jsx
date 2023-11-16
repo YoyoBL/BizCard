@@ -10,26 +10,38 @@ export const CardsProvider = ({ children }) => {
    const { user } = useAuth();
    const [allCards, setAllCards] = useState([]);
 
-   async function getAllCards() {
+   async function getAllCardsFromApi() {
       const { data } = await cardsService.getAll();
       setAllCards(data);
    }
 
    useEffect(() => {
-      getAllCards();
+      getAllCardsFromApi();
    }, []);
 
-   function refreshCards() {
-      getAllCards();
-   }
+   // function refreshCards() {
+   //    getAllCards();
+   // }
 
    function isFavorite(card) {
       return card.likes.includes(user._id);
    }
 
    async function AddToFavorites(id) {
+      const updatedCards = allCards.map((card) => {
+         if (card._id === id) {
+            if (isFavorite(card)) {
+               return {
+                  ...card,
+                  likes: card.likes.filter((like) => like !== user._id),
+               };
+            }
+            return { ...card, likes: [...card.likes, user._id] };
+         }
+         return card;
+      });
+      setAllCards(updatedCards);
       const response = await cardsService.addCardToFavorites(id);
-      refreshCards();
    }
 
    return (
