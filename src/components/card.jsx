@@ -4,11 +4,12 @@ import { useFavoriteCards } from "../hooks/useFavoriteCards";
 import { useCards } from "../contexts/cards.context";
 
 const Card = ({
-   card: { _id, title, description, address, phone, image, likes },
+   card: { _id, title, description, address, phone, image, likes, user_id },
 }) => {
-   const { user, isFavorite, AddToFavorites } = useCards();
+   const { user, isFavorite, isMyCard, AddToFavorites } = useCards();
 
-   const favorite = !user ? null : isFavorite({ _id, likes });
+   const favorite = !user ? null : isFavorite(likes);
+   const isItMyCard = !user ? null : isMyCard(user_id);
 
    return (
       <div className="card px-0" style={{ width: "18rem" }}>
@@ -34,12 +35,16 @@ const Card = ({
          </div>
 
          <div className="card-footer hstack">
-            <Link to={`/my-cards/delete/${_id}`} className="card-link">
-               <i className="bi bi-trash3 text-danger"></i>
-            </Link>
-            <Link to={`/my-cards/edit/${_id}`} className="card-link">
-               <i className="bi bi-pencil-square text-warning"></i>
-            </Link>
+            {isItMyCard && (
+               <Link to={`/my-cards/delete/${_id}`} className="card-link">
+                  <i className="bi bi-trash3 text-danger"></i>
+               </Link>
+            )}
+            {isItMyCard && (
+               <Link to={`/my-cards/edit/${_id}`} className="card-link">
+                  <i className="bi bi-pencil-square text-warning"></i>
+               </Link>
+            )}
             <Link to={`/my-cards/edit/${_id}`} className="card-link"></Link>
             {user && (
                <Link

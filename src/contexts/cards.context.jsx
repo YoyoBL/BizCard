@@ -8,6 +8,7 @@ const cardsContext = createContext({
    allCards: () => {},
    getAllCardsFromApi: () => {},
    isFavorite: () => {},
+   isMyCard: () => {},
    AddToFavorites: () => {},
 });
 
@@ -24,8 +25,12 @@ export const CardsProvider = ({ children }) => {
       getAllCardsFromApi();
    }, []);
 
-   function isFavorite(card) {
-      return card.likes.includes(user._id);
+   function isFavorite(likes) {
+      return likes.includes(user._id);
+   }
+
+   function isMyCard(userId) {
+      return userId === user._id;
    }
 
    async function AddToFavorites(id) {
@@ -51,6 +56,7 @@ export const CardsProvider = ({ children }) => {
             user,
             allCards,
             isFavorite,
+            isMyCard,
             AddToFavorites,
             getAllCardsFromApi,
          }}
