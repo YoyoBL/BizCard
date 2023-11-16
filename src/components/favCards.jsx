@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth.context";
 import Card from "./card";
 import PageHeader from "./common/pageHeader";
 import { useCards } from "../contexts/cards.context";
 
 const FavCards = ({ search = "" }) => {
-   const { allCards, isFavorite } = useCards();
    const { user } = useAuth();
+   const { allCards, isFavorite } = useCards();
+   const navigate = useNavigate();
+
+   if (!user) {
+      return navigate("/");
+   }
 
    function displayCards() {
       const favorites = allCards.filter((card) => isFavorite(card));

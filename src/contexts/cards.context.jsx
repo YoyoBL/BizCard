@@ -45,7 +45,9 @@ export const CardsProvider = ({ children }) => {
    }
 
    return (
-      <cardsContext.Provider value={{ allCards, isFavorite, AddToFavorites }}>
+      <cardsContext.Provider
+         value={{ user, allCards, isFavorite, AddToFavorites }}
+      >
          {children}
       </cardsContext.Provider>
    );

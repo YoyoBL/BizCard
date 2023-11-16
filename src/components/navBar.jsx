@@ -28,11 +28,13 @@ const NavBar = ({ value, onChange = () => {} }) => {
                         About
                      </NavLink>
                   </li>
-                  <li className="nav-item">
-                     <NavLink to="/favorite-cards" className="nav-link">
-                        Favorites
-                     </NavLink>
-                  </li>
+                  {user && (
+                     <li className="nav-item">
+                        <NavLink to="/favorite-cards" className="nav-link">
+                           Favorites
+                        </NavLink>
+                     </li>
+                  )}
                   {user?.isBusiness && (
                      <li className="nav-item">
                         <Link to={"/my-cards"} className="nav-link">

@@ -6,9 +6,9 @@ import { useCards } from "../contexts/cards.context";
 const Card = ({
    card: { _id, title, description, address, phone, image, likes },
 }) => {
-   const { isFavorite, AddToFavorites } = useCards();
+   const { user, isFavorite, AddToFavorites } = useCards();
 
-   const favorite = isFavorite({ _id, likes });
+   const favorite = !user ? null : isFavorite({ _id, likes });
 
    return (
       <div className="card px-0" style={{ width: "18rem" }}>
@@ -41,16 +41,18 @@ const Card = ({
                <i className="bi bi-pencil-square text-warning"></i>
             </Link>
             <Link to={`/my-cards/edit/${_id}`} className="card-link"></Link>
-            <Link
-               onClick={() => AddToFavorites(_id)}
-               className="text-muted  ms-auto"
-            >
-               <i
-                  className={`bi bi-heart${
-                     favorite ? "-fill text-danger" : ""
-                  }`}
-               ></i>
-            </Link>
+            {user && (
+               <Link
+                  onClick={() => AddToFavorites(_id)}
+                  className="text-muted  ms-auto"
+               >
+                  <i
+                     className={`bi bi-heart${
+                        favorite ? "-fill text-danger" : ""
+                     }`}
+                  ></i>
+               </Link>
+            )}
          </div>
       </div>
    );

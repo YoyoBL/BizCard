@@ -81,7 +81,7 @@ const SignUp = ({ redirect }) => {
                .label("House number"),
             zip: Joi.string().min(1).max(10).required().label("Zip"),
          },
-         isBusiness: false,
+         isBusiness: Joi.boolean(),
       }),
       async onSubmit(values) {
          try {
