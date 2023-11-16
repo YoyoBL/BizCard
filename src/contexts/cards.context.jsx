@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import cardsService from "../services/cardsService";
 import { useAuth } from "./auth.context";
 
-const cardsContext = createContext({});
+const cardsContext = createContext({
+   allCards: () => {},
+   getAllCardsFromApi: () => {},
+   isFavorite: () => {},
+   AddToFavorites: () => {},
+});
 
 export const CardsProvider = ({ children }) => {
    const { user } = useAuth();
@@ -18,10 +23,6 @@ export const CardsProvider = ({ children }) => {
    useEffect(() => {
       getAllCardsFromApi();
    }, []);
-
-   // function refreshCards() {
-   //    getAllCards();
-   // }
 
    function isFavorite(card) {
       return card.likes.includes(user._id);
@@ -46,7 +47,13 @@ export const CardsProvider = ({ children }) => {
 
    return (
       <cardsContext.Provider
-         value={{ user, allCards, isFavorite, AddToFavorites }}
+         value={{
+            user,
+            allCards,
+            isFavorite,
+            AddToFavorites,
+            getAllCardsFromApi,
+         }}
       >
          {children}
       </cardsContext.Provider>

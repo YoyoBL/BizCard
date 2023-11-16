@@ -1,9 +1,10 @@
 import PageHeader from "./common/pageHeader";
 import Card from "./card";
 import { useCards } from "../contexts/cards.context";
+import { useEffect } from "react";
 
 const Home = ({ search = "" }) => {
-   const { allCards } = useCards();
+   const { allCards, getAllCardsFromApi } = useCards();
 
    function displayCards() {
       if (search) {

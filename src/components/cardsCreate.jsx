@@ -8,10 +8,12 @@ import { useFormik } from "formik";
 import Joi from "joi";
 import { useState } from "react";
 import cardsService from "../services/cardsService";
+import { useCards } from "../contexts/cards.context";
 
 const CardsCreate = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
+   const { getAllCardsFromApi } = useCards();
 
    const form = useFormik({
       validateOnMount: true,
@@ -49,33 +51,34 @@ const CardsCreate = () => {
             .max(255)
             .required()
             .email({ tlds: { allow: false } }),
-         web: Joi.string(),
+         web: Joi.string().allow("").label("Website"),
          image: {
-            url: Joi.string(),
-            alt: Joi.string().max(40),
+            url: Joi.string().allow("").label("Image url"),
+            alt: Joi.string().max(40).allow("").label("Image alt"),
          },
          address: {
             state: Joi.string().min(2).max(50).label("State").allow(""),
             country: Joi.string().min(2).max(50).required().label("Country"),
             city: Joi.string().min(2).max(50).required().label("City"),
             street: Joi.string().min(2).max(50).required().label("Street"),
-            houseNumber: Joi.string()
+            houseNumber: Joi.number()
                .min(1)
                .max(10)
                .required()
                .label("House number"),
-            zip: Joi.string().min(1).max(10).label("Zip"),
+            zip: Joi.number().min(1).max(10).allow("").label("Zip"),
          },
       }),
       async onSubmit(values) {
          try {
-            const { bizImage, ...body } = values;
+            // const { bizImage, ...body } = values;
 
-            if (bizImage) {
-               body.bizImage = bizImage;
-            }
+            // if (bizImage) {
+            //    body.bizImage = bizImage;
+            // }
 
-            await cardsService.createCard(body);
+            await cardsService.createCard(values);
+            getAllCardsFromApi();
             navigate("/my-cards");
          } catch (err) {
             if (err.response?.status === 400) {
@@ -135,56 +138,59 @@ const CardsCreate = () => {
                error={form.touched.web && form.errors.web}
             />{" "}
             <Input
-               {...form.getFieldProps("url")}
+               {...form.getFieldProps("image.url")}
                type="text"
                label="Picture Url"
-               error={form.touched.url && form.errors.url}
+               error={form.touched.image?.url && form.errors.url}
             />{" "}
             <Input
-               {...form.getFieldProps("alt")}
+               {...form.getFieldProps("image.alt")}
                type="text"
                label="Picture Alt"
-               error={form.touched.alt && form.errors.alt}
+               error={form.touched.image?.alt && form.errors.alt}
             />{" "}
             <Input
-               {...form.getFieldProps("state")}
+               {...form.getFieldProps("address.state")}
                type="text"
                label="State"
-               error={form.touched.state && form.errors.state}
+               error={form.touched.address?.state && form.errors.state}
             />{" "}
             <Input
-               {...form.getFieldProps("country")}
+               {...form.getFieldProps("address.country")}
                type="text"
                label="Country"
                required
-               error={form.touched.country && form.errors.country}
+               error={form.touched.address?.country && form.errors.country}
             />{" "}
             <Input
-               {...form.getFieldProps("city")}
+               {...form.getFieldProps("address.city")}
                type="text"
                label="City"
                required
-               error={form.touched.city && form.errors.city}
+               error={form.touched.address?.city && form.errors.city}
             />{" "}
             <Input
-               {...form.getFieldProps("street")}
+               {...form.getFieldProps("address.street")}
                type="text"
                label="Street"
                required
-               error={form.touched.street && form.errors.street}
+               error={form.touched.address?.street && form.errors.street}
             />{" "}
             <Input
-               {...form.getFieldProps("houseNumber")}
+               {...form.getFieldProps("address.houseNumber")}
                type="text"
                label="HouseNumber"
                required
-               error={form.touched.houseNumber && form.errors.houseNumber}
+               error={
+                  form.touched.address?.houseNumber && form.errors.houseNumber
+               }
             />{" "}
             <Input
-               {...form.getFieldProps("zip")}
+               {...form.getFieldProps("address.zip")}
                type="text"
                label="Zip"
-               error={form.touched.zip && form.errors.zip}
+               required
+               error={form.touched.address?.zip && form.errors.zip}
             />
             <div className="col-12 hstack my-4">
                <button

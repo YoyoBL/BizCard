@@ -66,8 +66,8 @@ const SignUp = ({ redirect }) => {
                "'Password' must be at least 9 characters long and contain an uppercase letter, a lower case letter, a number and one of the following characters !@#$%^&*- "
             ),
          image: {
-            url: "",
-            alt: "",
+            url: Joi.string().allow("").label("Image url"),
+            alt: Joi.string().max(40).allow("").label("Image alt"),
          },
          address: {
             state: Joi.string().min(2).max(50).label("State").allow(""),
