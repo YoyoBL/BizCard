@@ -42,6 +42,13 @@ const NavBar = ({ value, onChange = () => {} }) => {
                         </Link>
                      </li>
                   )}
+                  {user?.isBusiness && (
+                     <li className="nav-item">
+                        <Link to={"/create-card"} className="nav-link">
+                           Create card
+                        </Link>
+                     </li>
+                  )}
                </ul>
 
                <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
