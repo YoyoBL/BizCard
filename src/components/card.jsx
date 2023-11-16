@@ -3,17 +3,7 @@ import { Link } from "react-router-dom";
 import { useCards } from "../contexts/cards.context";
 
 const Card = ({
-   card: {
-      _id,
-      title,
-      subtitle,
-      description,
-      address,
-      phone,
-      image,
-      likes,
-      user_id,
-   },
+   card: { _id, title, subtitle, address, phone, image, likes, user_id },
 }) => {
    const { user, isFavorite, isMyCard, AddToFavorites, deleteCard } =
       useCards();
@@ -56,7 +46,7 @@ const Card = ({
                </Link>
             )}
             {isItMyCard && (
-               <Link to={`/my-cards/edit/${_id}`} className="card-link">
+               <Link to={`/edit-card/${_id}`} className="card-link">
                   <i className="bi bi-pencil-square text-warning"></i>
                </Link>
             )}

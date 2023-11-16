@@ -11,6 +11,8 @@ const cardsContext = createContext({
    isMyCard: () => {},
    AddToFavorites: () => {},
    deleteCard: () => {},
+   editCard: () => {},
+   resetFields: () => {},
 });
 
 export const CardsProvider = ({ children }) => {
@@ -57,6 +59,17 @@ export const CardsProvider = ({ children }) => {
       getAllCardsFromApi();
    }
 
+   function resetFields(card) {
+      let reset = {};
+      for (let key in card) {
+         if (typeof card[key] === "Object") {
+            reset = { ...reset, [key]: resetFields(card[key]) };
+         }
+         reset = { ...reset, [key]: "" };
+      }
+      return reset;
+   }
+
    return (
       <cardsContext.Provider
          value={{
@@ -67,6 +80,8 @@ export const CardsProvider = ({ children }) => {
             isMyCard,
             AddToFavorites,
             deleteCard,
+            editCard: cardsService.updateCard,
+            resetFields,
          }}
       >
          {children}

@@ -9,7 +9,7 @@ import SignOut from "./components/sign-out";
 import Home from "./components/home";
 import ProtectedRoute from "./components/protectedRoute";
 import CardsCreate from "./components/cardsCreate";
-import CardDelete from "./components/cardDelete";
+import EditCard from "./components/editCard";
 import { useState } from "react";
 import FavCards from "./components/favCards";
 import MyCards from "./components/myCards";
@@ -54,10 +54,10 @@ function App() {
                   }
                />
                <Route
-                  path="/my-cards/delete/:id"
+                  path="/edit-card/:id"
                   element={
                      <ProtectedRoute onlyBiz>
-                        <CardDelete />
+                        <EditCard />
                      </ProtectedRoute>
                   }
                />

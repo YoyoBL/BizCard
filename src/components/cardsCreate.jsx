@@ -2,7 +2,7 @@ import { validateFormikUsingJoi } from "../utils/validateFormikUsingJoi";
 import Input from "./common/input";
 import PageHeader from "./common/pageHeader";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useFormik } from "formik";
 import Joi from "joi";
@@ -13,30 +13,31 @@ import { useCards } from "../contexts/cards.context";
 const CardsCreate = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { getAllCardsFromApi } = useCards();
+   const { getAllCardsFromApi, resetFields } = useCards();
+   const [inputs, setInputs] = useState({
+      title: "",
+      subtitle: "",
+      description: "",
+      phone: "",
+      email: "",
+      web: "",
+      image: {
+         url: "",
+         alt: "",
+      },
+      address: {
+         state: "",
+         country: "",
+         city: "",
+         street: "",
+         houseNumber: "",
+         zip: "",
+      },
+   });
 
    const form = useFormik({
       validateOnMount: true,
-      initialValues: {
-         title: "",
-         subtitle: "",
-         description: "",
-         phone: "",
-         email: "",
-         web: "",
-         image: {
-            url: "",
-            alt: "",
-         },
-         address: {
-            state: "",
-            country: "",
-            city: "",
-            street: "",
-            houseNumber: "",
-            zip: "",
-         },
-      },
+      initialValues: { inputs },
       validate: validateFormikUsingJoi({
          title: Joi.string().min(2).max(50).required(),
          subtitle: Joi.string().min(2).max(50).required(),
@@ -71,12 +72,6 @@ const CardsCreate = () => {
       }),
       async onSubmit(values) {
          try {
-            // const { bizImage, ...body } = values;
-
-            // if (bizImage) {
-            //    body.bizImage = bizImage;
-            // }
-
             await cardsService.createCard(values);
             getAllCardsFromApi();
             navigate("/my-cards");
@@ -136,46 +131,46 @@ const CardsCreate = () => {
                type="text"
                label="Website"
                error={form.touched.web && form.errors.web}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("image.url")}
                type="text"
                label="Picture Url"
                error={form.touched.image?.url && form.errors.url}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("image.alt")}
                type="text"
                label="Picture Alt"
                error={form.touched.image?.alt && form.errors.alt}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("address.state")}
                type="text"
                label="State"
                error={form.touched.address?.state && form.errors.state}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("address.country")}
                type="text"
                label="Country"
                required
                error={form.touched.address?.country && form.errors.country}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("address.city")}
                type="text"
                label="City"
                required
                error={form.touched.address?.city && form.errors.city}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("address.street")}
                type="text"
                label="Street"
                required
                error={form.touched.address?.street && form.errors.street}
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("address.houseNumber")}
                type="text"
@@ -184,7 +179,7 @@ const CardsCreate = () => {
                error={
                   form.touched.address?.houseNumber && form.errors.houseNumber
                }
-            />{" "}
+            />
             <Input
                {...form.getFieldProps("address.zip")}
                type="text"
@@ -192,13 +187,20 @@ const CardsCreate = () => {
                required
                error={form.touched.address?.zip && form.errors.zip}
             />
-            <div className="col-12 hstack my-4">
+            <div className="col-12 text-center my-4">
                <button
                   type="submit"
-                  className="btn btn-primary mx-auto "
+                  className="btn btn-primary  mx-3"
                   disabled={!form.isValid}
                >
                   Create
+               </button>
+               <button
+                  type="reset"
+                  onClick={() => form.resetForm()}
+                  className="btn btn-warning  mx-3"
+               >
+                  Reset fields
                </button>
             </div>
          </form>
