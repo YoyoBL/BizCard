@@ -13,31 +13,30 @@ import { useCards } from "../contexts/cards.context";
 const CardsCreate = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { getAllCardsFromApi, resetFields } = useCards();
-   const [inputs, setInputs] = useState({
-      title: "",
-      subtitle: "",
-      description: "",
-      phone: "",
-      email: "",
-      web: "",
-      image: {
-         url: "",
-         alt: "",
-      },
-      address: {
-         state: "",
-         country: "",
-         city: "",
-         street: "",
-         houseNumber: "",
-         zip: "",
-      },
-   });
+   const { createCard } = useCards();
 
    const form = useFormik({
       validateOnMount: true,
-      initialValues: { inputs },
+      initialValues: {
+         title: "",
+         subtitle: "",
+         description: "",
+         phone: "",
+         email: "",
+         web: "",
+         image: {
+            url: "",
+            alt: "",
+         },
+         address: {
+            state: "",
+            country: "",
+            city: "",
+            street: "",
+            houseNumber: "",
+            zip: "",
+         },
+      },
       validate: validateFormikUsingJoi({
          title: Joi.string().min(2).max(50).required(),
          subtitle: Joi.string().min(2).max(50).required(),
@@ -63,17 +62,15 @@ const CardsCreate = () => {
             city: Joi.string().min(2).max(50).required().label("City"),
             street: Joi.string().min(2).max(50).required().label("Street"),
             houseNumber: Joi.number()
-               .min(1)
-               .max(10)
+               .max(99999)
                .required()
                .label("House number"),
-            zip: Joi.number().min(1).max(10).allow("").label("Zip"),
+            zip: Joi.number().max(9999999999).required().label("Zip"),
          },
       }),
       async onSubmit(values) {
          try {
-            await cardsService.createCard(values);
-            getAllCardsFromApi();
+            await createCard(values);
             navigate("/my-cards");
          } catch (err) {
             if (err.response?.status === 400) {
@@ -87,10 +84,10 @@ const CardsCreate = () => {
       <>
          <PageHeader title="Create a Card" />
 
+         {serverError && (
+            <div className="alert alert-danger">{serverError}</div>
+         )}
          <form onSubmit={form.handleSubmit} className="row row-cols-2">
-            {serverError && (
-               <div className="alert alert-danger">{serverError}</div>
-            )}
             <Input
                {...form.getFieldProps("title")}
                type="text"

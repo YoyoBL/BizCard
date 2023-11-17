@@ -33,7 +33,7 @@ function App() {
                   path="/my-cards"
                   element={
                      <ProtectedRoute onlyBiz>
-                        <MyCards />
+                        <MyCards search={searchInput} />
                      </ProtectedRoute>
                   }
                />
@@ -41,7 +41,7 @@ function App() {
                   path="/favorite-cards"
                   element={
                      <ProtectedRoute>
-                        <FavCards />
+                        <FavCards search={searchInput} />
                      </ProtectedRoute>
                   }
                />

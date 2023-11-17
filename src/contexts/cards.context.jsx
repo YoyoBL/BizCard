@@ -7,6 +7,7 @@ import { useAuth } from "./auth.context";
 const cardsContext = createContext({
    allCards: () => {},
    getAllCardsFromApi: () => {},
+   createCard: () => {},
    isFavorite: () => {},
    isMyCard: () => {},
    AddToFavorites: () => {},
@@ -55,7 +56,17 @@ export const CardsProvider = ({ children }) => {
    }
 
    async function deleteCard(cardId) {
-      await cardsService.deleteCard(cardId).catch(() => {});
+      await cardsService.deleteCard(cardId);
+      getAllCardsFromApi();
+   }
+
+   async function createCard(card) {
+      await cardsService.createCard(card);
+      getAllCardsFromApi();
+   }
+
+   async function editCard(cardId, card) {
+      await cardsService.updateCard(cardId, card);
       getAllCardsFromApi();
    }
 
@@ -76,11 +87,12 @@ export const CardsProvider = ({ children }) => {
             user,
             allCards,
             getAllCardsFromApi,
+            createCard,
             isFavorite,
             isMyCard,
             AddToFavorites,
             deleteCard,
-            editCard: cardsService.updateCard,
+            editCard,
             resetFields,
          }}
       >

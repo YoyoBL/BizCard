@@ -88,17 +88,15 @@ const EditCard = () => {
             city: Joi.string().min(2).max(50).required().label("City"),
             street: Joi.string().min(2).max(50).required().label("Street"),
             houseNumber: Joi.number()
-               .min(1)
-               .max(10)
+               .max(99999)
                .required()
                .label("House number"),
-            zip: Joi.number().min(1).max(10).allow("").label("Zip"),
+            zip: Joi.number().max(9999999999).label("Zip"),
          },
       }),
       async onSubmit(values) {
          try {
             await editCard(id, values);
-            getAllCardsFromApi();
             navigate("/my-cards");
          } catch (err) {
             if (err.response?.status === 400) {
@@ -227,12 +225,14 @@ const EditCard = () => {
                </button>
 
                <button
+                  type="reset"
                   onClick={() => setCard(resetFields())}
                   className="btn btn-warning mx-5 "
                >
                   Reset fields
                </button>
                <button
+                  type="button"
                   onClick={() => navigate("/my-cards")}
                   className="btn btn-secondary "
                >

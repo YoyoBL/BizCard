@@ -55,10 +55,11 @@ const NavBar = ({ value, onChange = () => {} }) => {
                   <li>
                      <div className="position-relative d-flex">
                         <input
+                           type="text"
                            onChange={(e) => onChange(e.target.value)}
                            value={value}
                            className="form-control"
-                           type="text"
+                           placeholder="Search..."
                         />
                         <i className="bi bi-search position-absolute end-0 p-2"></i>
                      </div>
