@@ -9,11 +9,14 @@ import Joi from "joi";
 import { useState } from "react";
 import cardsService from "../services/cardsService";
 import { useCards } from "../contexts/cards.context";
+import AlertMessage from "./alertMessage";
+import { useAlert } from "../contexts/alert.context";
 
 const CardsCreate = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
    const { createCard } = useCards();
+   const { activateAlert } = useAlert();
 
    const form = useFormik({
       validateOnMount: true,
@@ -71,6 +74,7 @@ const CardsCreate = () => {
       async onSubmit(values) {
          try {
             await createCard(values);
+            activateAlert("Card created!");
             navigate("/my-cards");
          } catch (err) {
             if (err.response?.status === 400) {

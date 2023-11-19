@@ -9,58 +9,66 @@ import Joi from "joi";
 import { useEffect, useState } from "react";
 import cardsService from "../services/cardsService";
 import { useCards } from "../contexts/cards.context";
+import { useAlert } from "../contexts/alert.context";
 
 const EditCard = () => {
    const { id } = useParams();
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { getAllCardsFromApi, editCard, resetFields } = useCards();
-   const [card, setCard] = useState({});
+   const { editCard } = useCards();
+   const { activateAlert } = useAlert();
 
    useEffect(() => {
-      async function getCardById() {
+      async function setFieldsByCard() {
          try {
-            const response = await cardsService.getCard(id);
-            setCard(response.data);
+            const { data } = await cardsService.getCard(id);
+            form.setValues({
+               title: data.title,
+               subtitle: data.subtitle,
+               description: data.description,
+               phone: data.phone,
+               email: data.email,
+               web: data.web,
+               image: {
+                  url: data.image?.url,
+                  alt: data.image?.alt,
+               },
+               address: {
+                  state: data.address?.state,
+                  country: data.address?.country,
+                  city: data.address?.city,
+                  street: data.address?.street,
+                  houseNumber: data.address?.houseNumber,
+                  zip: data.address?.zip,
+               },
+            });
          } catch (err) {
             setServerError(err);
          }
       }
-      getCardById();
+      setFieldsByCard();
    }, []);
-
-   // function resetFields() {
-   //    let reset = {};
-   //    for (let key in card) {
-   //       if (typeof card[key] === "Object") {
-   //          reset = { ...reset, [key]: resetFields(card[key]) };
-   //       }
-   //       reset = { ...reset, [key]: "" };
-   //    }
-   //    return setCard(reset);
-   // }
 
    const form = useFormik({
       validateOnMount: true,
-      enableReinitialize: true,
       initialValues: {
-         title: card.title || "",
-         subtitle: card.subtitle || "",
-         description: card.description || "",
-         phone: card.phone || "",
-         email: card.email || "",
-         web: card.web || "",
+         title: "",
+         subtitle: "",
+         description: "",
+         phone: "",
+         email: "",
+         web: "",
          image: {
-            url: card.image?.url || "",
-            alt: card.image?.alt || "",
+            url: "",
+            alt: "",
          },
          address: {
-            state: card.address?.state || "",
-            country: card.address?.country || "",
-            city: card.address?.city || "",
-            street: card.address?.street || "",
-            houseNumber: card.address?.houseNumber || "",
-            zip: card.address?.zip || "",
+            state: "",
+            country: "",
+            city: "",
+            street: "",
+            houseNumber: "",
+            zip: "",
          },
       },
       validate: validateFormikUsingJoi({
@@ -97,6 +105,7 @@ const EditCard = () => {
       async onSubmit(values) {
          try {
             await editCard(id, values);
+            activateAlert("Card edited!");
             navigate("/my-cards");
          } catch (err) {
             if (err.response?.status === 400) {
@@ -226,7 +235,7 @@ const EditCard = () => {
 
                <button
                   type="reset"
-                  onClick={() => setCard(resetFields())}
+                  onClick={() => form.resetForm()}
                   className="btn btn-warning mx-5 "
                >
                   Reset fields

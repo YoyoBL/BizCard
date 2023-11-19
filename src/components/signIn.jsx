@@ -5,11 +5,14 @@ import Joi from "joi";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../contexts/auth.context";
+import AlertMessage from "./alertMessage";
+import { useAlert } from "../contexts/alert.context";
 
 const SignIn = ({ redirect }) => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
    const { user, login } = useAuth();
+   const { activateAlert } = useAlert();
 
    const form = useFormik({
       validateOnMount: true,
@@ -43,6 +46,7 @@ const SignIn = ({ redirect }) => {
 
             if (redirect) {
                navigate(redirect);
+               activateAlert("Logged In successfully");
             }
          } catch (err) {
             if (err.response?.status === 400) {

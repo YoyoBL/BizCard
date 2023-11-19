@@ -8,12 +8,13 @@ import { useFormik } from "formik";
 import Joi from "joi";
 import { useState } from "react";
 import { useAuth } from "../contexts/auth.context";
+import { useAlert } from "../contexts/alert.context";
 
 const SignUp = ({ redirect }) => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-
    const { user, signUp } = useAuth();
+   const { activateAlert } = useAlert();
 
    const form = useFormik({
       validateOnMount: true,
@@ -86,6 +87,7 @@ const SignUp = ({ redirect }) => {
       async onSubmit(values) {
          try {
             await signUp({ ...values });
+            activateAlert("User Created! Please log in");
             if (redirect) {
                navigate(redirect);
             }

@@ -12,32 +12,38 @@ const Card = ({
    const isItMyCard = !user ? null : isMyCard(user_id);
 
    return (
-      <div className="card px-0 rounded-4" style={{ width: "18rem" }}>
-         <div
-            className="overflow-hidden rounded-top-4"
-            style={{ height: "12rem" }}
+      <div
+         className="card px-0 rounded-4 card-hover"
+         style={{ width: "18rem" }}
+      >
+         <Link
+            to={`business-page/${_id}`}
+            className="text-reset text-decoration-none "
          >
-            <img src={image.url} className="img-fluid " alt={image.alt} />
-         </div>
-
-         <div className="card-body d-flex flex-column justify-content-around">
-            <div>
-               <h3 className="card-title">{title}</h3>
-               <h5 className="card-title">{subtitle}</h5>
+            <div
+               className="overflow-hidden rounded-top-4"
+               style={{ height: "12rem" }}
+            >
+               <img src={image.url} className="img-fluid " alt={image.alt} />
             </div>
-
-            <div>
-               <ul className="list-group ">
-                  <li className="list-group-item">
-                     <b>Address:</b> {address.street} {address.houseNumber}
-                     {address?.state} {address.city}
-                  </li>
-                  <li className="list-group-item">
-                     <b>Phone:</b> {phone}
-                  </li>
-               </ul>
+            <div className="card-body d-flex flex-column justify-content-around">
+               <div>
+                  <h3 className="card-title">{title}</h3>
+                  <h5 className="card-title">{subtitle}</h5>
+               </div>
+               <div>
+                  <ul className="list-group ">
+                     <li className="list-group-item">
+                        <b>Address:</b> {address.street} {address.houseNumber}
+                        {address?.state} {address.city}
+                     </li>
+                     <li className="list-group-item">
+                        <b>Phone:</b> {phone}
+                     </li>
+                  </ul>
+               </div>
             </div>
-         </div>
+         </Link>
 
          <div className="card-footer hstack">
             {isItMyCard && (

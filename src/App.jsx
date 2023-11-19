@@ -13,9 +13,12 @@ import EditCard from "./components/editCard";
 import { useState } from "react";
 import FavCards from "./components/favCards";
 import MyCards from "./components/myCards";
+import AlertMessage from "./components/alertMessage";
+import { useAlert } from "./contexts/alert.context";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
+   const { alertMessage } = useAlert();
 
    function handleSearchInputChange(e) {
       setSearchInput(e);
@@ -25,7 +28,8 @@ function App() {
          <header className="pb-3">
             <NavBar value={searchInput} onChange={handleSearchInputChange} />
          </header>
-         <main className="flex-fill container">
+         <main className="flex-fill container position-relative">
+            {alertMessage && <AlertMessage />}
             <Routes>
                <Route path="/" element={<Home search={searchInput} />} />
                <Route path="/about" element={<About />} />
