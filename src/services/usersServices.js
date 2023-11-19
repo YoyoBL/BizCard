@@ -1,3 +1,4 @@
+import httpServices from "./httpServices";
 import httpService from "./httpServices";
 import { jwtDecode } from "jwt-decode";
 
@@ -39,11 +40,20 @@ export function getUser() {
    }
 }
 
+function getUserById(id) {
+   try {
+      return httpServices.get(`users/${id}`);
+   } catch {
+      return null;
+   }
+}
+
 const usersService = {
    createUser,
    login,
    logout,
    getUser,
+   getUserById,
    getJWT,
 };
 

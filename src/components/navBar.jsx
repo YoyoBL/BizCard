@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/auth.context";
 import { useColorMode } from "../hooks/useColorMode";
 
 const NavBar = ({ value, onChange = () => {} }) => {
-   const { user } = useAuth();
+   const { user, userDetails } = useAuth();
    const { switchColorMode } = useColorMode();
 
    return (
@@ -83,9 +83,21 @@ const NavBar = ({ value, onChange = () => {} }) => {
                   </li>
                   {user ? (
                      <>
-                        <li className="nav-item ">
+                        <li className="nav-item">
                            <NavLink to={"/sign-out"} className="nav-link">
                               Sign out
+                           </NavLink>
+                        </li>
+                        <li className="nav-item total-center mx-3">
+                           <NavLink to={`/My-profile`}>
+                              <img
+                                 src={userDetails?.image.url}
+                                 alt={userDetails?.image.alt}
+                                 className="rounded-bi-circle-fill"
+                                 style={{
+                                    height: "1.5rem",
+                                 }}
+                              />
                            </NavLink>
                         </li>
                      </>
