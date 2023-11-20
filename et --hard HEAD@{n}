@@ -1,0 +1,25 @@
+[33m4c2c6c95[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m HEAD@{0}: reset: moving to 4c2c6c95a44a98d803ff9cc10dc078b749baaf7f
+[33m0c4304d5[m HEAD@{1}: reset: moving to 0c4304d598b2b847c64bb87d9f625a21b68cd74e
+[33mc2aa429a[m HEAD@{2}: commit: delete cache
+[33m0c4304d5[m HEAD@{3}: reset: moving to HEAD~
+[33m70d95e8a[m HEAD@{4}: commit: delete cache
+[33m0c4304d5[m HEAD@{5}: commit: biz page and deleted cache
+[33m4c2c6c95[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m HEAD@{6}: commit: added userdetails and profile pic to nav
+[33m9cca2691[m HEAD@{7}: commit: Alert message
+[33mf049e8cc[m HEAD@{8}: commit: testing editCard change
+[33meeb74853[m HEAD@{9}: commit: finished edit card
+[33m784eb606[m HEAD@{10}: commit: starting edit card
+[33mb05cd3a6[m HEAD@{11}: commit: permission to edit/delete cards
+[33mfdd7b15c[m HEAD@{12}: commit: finished create card
+[33ma9e36fab[m HEAD@{13}: commit: create card form
+[33m8cae79b8[m HEAD@{14}: commit: starting create card. added .cache to gitignore
+[33m2b69f4fa[m HEAD@{15}: commit: finished footer, fixed icon permissions and sign up business checkbox
+[33mbe962147[m HEAD@{16}: commit: starting footer
+[33m10faa436[m HEAD@{17}: commit: cards context
+[33m9c725bef[m HEAD@{18}: commit: fav btn on card
+[33mb9755a5f[m HEAD@{19}: commit: fav button on card
+[33m67293c13[m HEAD@{20}: commit: fifth
+[33m645a7a0b[m HEAD@{21}: commit: fourth
+[33mc58733cc[m HEAD@{22}: commit: third
+[33m183142af[m HEAD@{23}: commit: second
+[33m3ff37deb[m HEAD@{24}: commit (initial): first commit
