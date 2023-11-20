@@ -13,7 +13,7 @@ const Card = ({
 
    return (
       <div
-         className="card px-0 rounded-4 card-hover"
+         className="card px-0 rounded-4 card-hover justify-content-between"
          style={{ width: "18rem" }}
       >
          <Link

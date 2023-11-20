@@ -15,6 +15,7 @@ import FavCards from "./components/favCards";
 import MyCards from "./components/myCards";
 import AlertMessage from "./components/alertMessage";
 import { useAlert } from "./contexts/alert.context";
+import BusinessPage from "./components/businessPage";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
@@ -65,6 +66,7 @@ function App() {
                      </ProtectedRoute>
                   }
                />
+               <Route path="/Business-page/:id" element={<BusinessPage />} />
                <Route path="/sign-in" element={<SignIn redirect="/" />} />
                <Route
                   path="/sign-up"

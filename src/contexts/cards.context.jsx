@@ -13,6 +13,7 @@ const cardsContext = createContext({
    AddToFavorites: () => {},
    deleteCard: () => {},
    editCard: () => {},
+   getCard: () => {},
 });
 
 export const CardsProvider = ({ children }) => {
@@ -81,6 +82,7 @@ export const CardsProvider = ({ children }) => {
             AddToFavorites,
             deleteCard,
             editCard,
+            getCard: cardsService.getCard,
          }}
       >
          {children}

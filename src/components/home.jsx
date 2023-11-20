@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 const Home = ({ search = "" }) => {
    const { allCards, getAllCardsFromApi } = useCards();
-
    function displayCards() {
       if (search) {
          return allCards
