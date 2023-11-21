@@ -35,13 +35,13 @@ const BusinessPage = () => {
                <ListTwoCols title="Phone" content={card.phone} />
                <ListTwoCols title="Email" content={card.email} />
                <ListTwoCols title="Web" content={card.web} />
-               <ListTwoCols title="Test" content={""} />
                <ListTwoCols
                   title="Address"
                   content={[
                      card.address.street,
                      card.address.houseNumber,
                      card.address.city,
+                     card.address.zip,
                   ]
                      .filter((e) => Boolean(e))
                      .join(" ")}

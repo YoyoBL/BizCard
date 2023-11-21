@@ -17,7 +17,7 @@ const Card = ({
          style={{ width: "18rem" }}
       >
          <Link
-            to={`business-page/${_id}`}
+            to={`/business-page/${_id}`}
             className="text-reset text-decoration-none "
          >
             <div
@@ -34,8 +34,15 @@ const Card = ({
                <div>
                   <ul className="list-group ">
                      <li className="list-group-item">
-                        <b>Address:</b> {address.street} {address.houseNumber}
-                        {address?.state} {address.city}
+                        <b>Address:</b>{" "}
+                        {[
+                           address.street,
+                           address.houseNumber,
+                           address.city,
+                           address.zip,
+                        ]
+                           .filter(Boolean)
+                           .join(" ")}
                      </li>
                      <li className="list-group-item">
                         <b>Phone:</b> {phone}
