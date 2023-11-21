@@ -66,7 +66,7 @@ function App() {
                      </ProtectedRoute>
                   }
                />
-               <Route path="/Business-page/:id" element={<BusinessPage />} />
+               <Route path="/business-page/:id" element={<BusinessPage />} />
                <Route path="/sign-in" element={<SignIn redirect="/" />} />
                <Route
                   path="/sign-up"

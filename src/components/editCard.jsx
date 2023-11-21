@@ -72,34 +72,42 @@ const EditCard = () => {
          },
       },
       validate: validateFormikUsingJoi({
-         title: Joi.string().min(2).max(50).required(),
-         subtitle: Joi.string().min(2).max(50).required(),
-         description: Joi.string().min(2).max(200).required(),
+         title: Joi.string().min(2).max(256).required(),
+         subtitle: Joi.string().min(2).max(256).required(),
+         description: Joi.string().min(2).max(1024).required(),
          phone: Joi.string()
             .min(9)
-            .max(10)
+            .max(11)
             .required()
-            .regex(/^0[2-9]\d{7,8}$/),
+            .regex(/^0[2-9]\d{7,8}$/)
+            .message('"Phone" must be a standard Israeli phone number'),
          email: Joi.string()
-            .min(2)
-            .max(255)
+            .min(5)
             .required()
             .email({ tlds: { allow: false } }),
-         web: Joi.string().allow("").label("Website"),
+         web: Joi.string().min(14).uri().allow("").required().label("Website"),
          image: {
-            url: Joi.string().allow("").label("Image url"),
-            alt: Joi.string().max(40).allow("").label("Image alt"),
+            url: Joi.string()
+               .uri()
+               .min(14)
+               .uri()
+               .allow("")
+               .required()
+               .label("Image url"),
+            alt: Joi.string()
+               .min(2)
+               .max(256)
+               .allow("")
+               .required()
+               .label("Image alt"),
          },
          address: {
-            state: Joi.string().min(2).max(50).label("State").allow(""),
-            country: Joi.string().min(2).max(50).required().label("Country"),
-            city: Joi.string().min(2).max(50).required().label("City"),
-            street: Joi.string().min(2).max(50).required().label("Street"),
-            houseNumber: Joi.number()
-               .max(99999)
-               .required()
-               .label("House number"),
-            zip: Joi.number().max(9999999999).label("Zip"),
+            state: Joi.string().label("State").allow(""),
+            country: Joi.string().required().label("Country"),
+            city: Joi.string().required().label("City"),
+            street: Joi.string().required().label("Street"),
+            houseNumber: Joi.number().min(1).required().label("House number"),
+            zip: Joi.number().allow("").label("Zip"),
          },
       }),
       async onSubmit(values) {
@@ -221,7 +229,6 @@ const EditCard = () => {
                {...form.getFieldProps("address.zip")}
                type="text"
                label="Zip"
-               required
                error={form.touched.address?.zip && form.errors.zip}
             />
             <div className="col-12 text-center my-4">

@@ -43,38 +43,49 @@ const SignUp = ({ redirect }) => {
       },
       validate: validateFormikUsingJoi({
          name: {
-            first: Joi.string().min(2).max(50).required().label("First"),
-            middle: Joi.string().min(2).max(50).label("Middle").allow(""),
-            last: Joi.string().min(2).max(50).required().label("Last"),
+            first: Joi.string().min(2).max(256).required().label("First"),
+            middle: Joi.string()
+               .min(2)
+               .max(256)
+               .required()
+               .label("Middle")
+               .allow(""),
+            last: Joi.string().min(2).max(256).required().label("Last"),
          },
          phone: Joi.string()
             .min(9)
-            .max(10)
+            .max(11)
+            .regex(/^0[2-9]\d{7,8}$/)
             .required()
-            .regex(/^0[2-9]\d{7,8}$/),
+            .message('"phone" must be a standard Israeli phone number'),
          email: Joi.string()
-            .min(2)
-            .max(255)
+            .min(5)
             .required()
             .email({ tlds: { allow: false } }),
          password: Joi.string()
-            .min(9)
-            .required()
+            .min(7)
+            .max(20)
             .regex(
                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-])(?=.{9,})/
             )
+            .required()
             .message(
                "'Password' must be at least 9 characters long and contain an uppercase letter, a lower case letter, a number and one of the following characters !@#$%^&*- "
             ),
          image: {
-            url: Joi.string().allow("").label("Image url"),
+            url: Joi.string().uri().required().allow("").label("Image url"),
             alt: Joi.string().max(40).allow("").label("Image alt"),
          },
          address: {
-            state: Joi.string().min(2).max(50).label("State").allow(""),
-            country: Joi.string().min(2).max(50).required().label("Country"),
-            city: Joi.string().min(2).max(50).required().label("City"),
-            street: Joi.string().min(2).max(50).required().label("Street"),
+            state: Joi.string()
+               .min(2)
+               .max(256)
+               .label("State")
+               .required()
+               .allow(""),
+            country: Joi.string().min(2).max(256).required().label("Country"),
+            city: Joi.string().min(2).max(256).required().label("City"),
+            street: Joi.string().min(2).max(256).required().label("Street"),
             houseNumber: Joi.string()
                .min(1)
                .max(10)
