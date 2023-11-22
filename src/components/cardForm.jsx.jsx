@@ -2,21 +2,53 @@ import { validateFormikUsingJoi } from "../utils/validateFormikUsingJoi";
 import Input from "./common/input";
 import PageHeader from "./common/pageHeader";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useFormik } from "formik";
 import Joi from "joi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cardsService from "../services/cardsService";
 import { useCards } from "../contexts/cards.context";
-import AlertMessage from "./alertMessage";
 import { useAlert } from "../contexts/alert.context";
 
-const CardsCreate = () => {
+const CardForm = ({ forEditing = false }) => {
+   const { id } = useParams();
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { createCard } = useCards();
+   const { createCard, editCard } = useCards();
    const { activateAlert } = useAlert();
+
+   useEffect(() => {
+      if (!forEditing) return;
+      async function setFieldsByCard() {
+         try {
+            const { data } = await cardsService.getCard(id);
+            form.setValues({
+               title: data.title,
+               subtitle: data.subtitle,
+               description: data.description,
+               phone: data.phone,
+               email: data.email,
+               web: data.web,
+               image: {
+                  url: data.image?.url,
+                  alt: data.image?.alt,
+               },
+               address: {
+                  state: data.address?.state,
+                  country: data.address?.country,
+                  city: data.address?.city,
+                  street: data.address?.street,
+                  houseNumber: data.address?.houseNumber,
+                  zip: data.address?.zip,
+               },
+            });
+         } catch (err) {
+            setServerError(err);
+         }
+      }
+      setFieldsByCard();
+   }, []);
 
    const form = useFormik({
       validateOnMount: true,
@@ -84,8 +116,13 @@ const CardsCreate = () => {
             values.address.zip = 0;
          }
          try {
-            await createCard(values);
-            activateAlert("Card created!");
+            if (forEditing) {
+               await editCard(id, values);
+               activateAlert("Card edited!");
+            } else {
+               await createCard(values);
+               activateAlert("Card created!");
+            }
             navigate("/my-cards");
          } catch (err) {
             if (err.response?.status === 400) {
@@ -97,7 +134,7 @@ const CardsCreate = () => {
 
    return (
       <>
-         <PageHeader title="Create a Card" />
+         <PageHeader title={forEditing ? "Edit Card" : "Create a Card"} />
 
          {serverError && (
             <div className="alert alert-danger">{serverError}</div>
@@ -211,7 +248,7 @@ const CardsCreate = () => {
                   className="btn btn-primary  mx-3"
                   disabled={!form.isValid}
                >
-                  Create
+                  {forEditing ? "Edit" : "Create"}
                </button>
                <button
                   type="reset"
@@ -220,10 +257,17 @@ const CardsCreate = () => {
                >
                   Reset fields
                </button>
+               <button
+                  type="button"
+                  onClick={() => navigate("/my-cards")}
+                  className="btn btn-secondary "
+               >
+                  Cancel
+               </button>
             </div>
          </form>
       </>
    );
 };
 
-export default CardsCreate;
+export default CardForm;

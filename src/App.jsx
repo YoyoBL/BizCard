@@ -8,14 +8,13 @@ import SignIn from "./components/signIn";
 import SignOut from "./components/sign-out";
 import Home from "./components/home";
 import ProtectedRoute from "./components/protectedRoute";
-import CardsCreate from "./components/cardsCreate";
-import EditCard from "./components/editCard";
 import { useState } from "react";
 import FavCards from "./components/favCards";
 import MyCards from "./components/myCards";
 import AlertMessage from "./components/alertMessage";
 import { useAlert } from "./contexts/alert.context";
 import BusinessPage from "./components/businessPage";
+import CardForm from "./components/cardForm.jsx";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
@@ -54,7 +53,7 @@ function App() {
                   path="/create-card"
                   element={
                      <ProtectedRoute onlyBiz>
-                        <CardsCreate />
+                        <CardForm />
                      </ProtectedRoute>
                   }
                />
@@ -62,7 +61,7 @@ function App() {
                   path="/edit-card/:id"
                   element={
                      <ProtectedRoute onlyBiz>
-                        <EditCard />
+                        <CardForm forEditing />
                      </ProtectedRoute>
                   }
                />
