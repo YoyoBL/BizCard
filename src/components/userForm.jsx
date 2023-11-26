@@ -2,19 +2,48 @@ import { validateFormikUsingJoi } from "../utils/validateFormikUsingJoi";
 import Input from "./common/input";
 import PageHeader from "./common/pageHeader";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useFormik } from "formik";
 import Joi from "joi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/auth.context";
 import { useAlert } from "../contexts/alert.context";
 
-const SignUp = ({ redirect }) => {
+const UserForm = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { user, signUp } = useAuth();
+   const { user, userDetails, updateUser, signUp } = useAuth();
    const { activateAlert } = useAlert();
+
+   const [isBusiness, setIsBusiness] = useState(false);
+
+   useEffect(() => {
+      if (!userDetails) return;
+
+      form.setValues({
+         name: {
+            first: userDetails.name.first,
+            middle: userDetails.name.middle,
+            last: userDetails.name.last,
+         },
+         phone: userDetails.phone,
+         image: {
+            url: userDetails.image.url,
+            alt: userDetails.image.alt,
+         },
+         address: {
+            state: userDetails.address.state,
+            country: userDetails.address.country,
+            city: userDetails.address.city,
+            street: userDetails.address.street,
+            houseNumber: String(userDetails.address.houseNumber),
+            zip: String(userDetails.address.zip),
+         },
+      });
+
+      setIsBusiness(userDetails.isBusiness);
+   }, [userDetails]);
 
    const form = useFormik({
       validateOnMount: true,
@@ -25,8 +54,8 @@ const SignUp = ({ redirect }) => {
             last: "",
          },
          phone: "",
-         email: "",
-         password: "",
+         ...(!user && { email: "", password: "" }),
+
          image: {
             url: "",
             alt: "",
@@ -39,7 +68,7 @@ const SignUp = ({ redirect }) => {
             houseNumber: "",
             zip: "",
          },
-         isBusiness: false,
+         ...(!user && { isBusiness: "" }),
       },
       validate: validateFormikUsingJoi({
          name: {
@@ -58,20 +87,23 @@ const SignUp = ({ redirect }) => {
             .regex(/^0[2-9]\d{7,8}$/)
             .message('"phone" must be a standard Israeli phone number')
             .required(),
-         email: Joi.string()
-            .min(5)
-            .required()
-            .email({ tlds: { allow: false } }),
-         password: Joi.string()
-            .min(7)
-            .max(20)
-            .regex(
-               /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-])(?=.{9,})/
-            )
-            .message(
-               "'Password' must be at least 9 characters long and contain an uppercase letter, a lower case letter, a number and one of the following characters !@#$%^&*- "
-            )
-            .required(),
+         ...(!user && {
+            email: Joi.string()
+               .min(5)
+               .required()
+               .email({ tlds: { allow: false } }),
+            password: Joi.string()
+               .min(7)
+               .max(20)
+               .regex(
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-])(?=.{9,})/
+               )
+               .message(
+                  "'Password' must be at least 9 characters long and contain an uppercase letter, a lower case letter, a number and one of the following characters !@#$%^&*- "
+               )
+               .required(),
+         }),
+
          image: {
             url: Joi.string().uri().required().allow("").label("Image url"),
             alt: Joi.string().max(40).allow("").label("Image alt"),
@@ -91,17 +123,21 @@ const SignUp = ({ redirect }) => {
                .max(10)
                .required()
                .label("House number"),
-            zip: Joi.string().min(1).max(10).required().label("Zip"),
+            zip: Joi.string().min(1).max(10).required().label("Zip").allow(""),
          },
-         isBusiness: Joi.boolean(),
+         ...(!user && { isBusiness: Joi.boolean().required() }),
       }),
       async onSubmit(values) {
          try {
-            await signUp({ ...values });
-            activateAlert("User Created! Please log in");
-            if (redirect) {
-               navigate(redirect);
+            if (user) {
+               await updateUser(user._id, values);
+            } else {
+               await signUp(values);
             }
+            activateAlert(
+               !user ? "User Created! Please log in" : "Changes saved"
+            );
+            navigate(!user ? "/sign-in" : "/my-profile");
          } catch (err) {
             if (err.response?.status === 400) {
                setServerError(err.response.data);
@@ -109,10 +145,6 @@ const SignUp = ({ redirect }) => {
          }
       },
    });
-
-   if (user) {
-      return <Navigate to={"/"} />;
-   }
 
    return (
       <>
@@ -153,20 +185,22 @@ const SignUp = ({ redirect }) => {
                   required
                   error={form.touched.phone && form.errors.phone}
                />
-               <Input
-                  {...form.getFieldProps("email")}
-                  type="email"
-                  label="Email"
-                  required
-                  error={form.touched.email && form.errors.email}
-               />
-               <Input
-                  {...form.getFieldProps("password")}
-                  type="password"
-                  label="Password"
-                  required
-                  error={form.touched.password && form.errors.password}
-               />
+               {!user &&
+                  (<Input
+                     {...form.getFieldProps("email")}
+                     type="email"
+                     label="Email"
+                     required
+                     error={form.touched.email && form.errors.email}
+                  />)(
+                     <Input
+                        {...form.getFieldProps("password")}
+                        type="password"
+                        label="Password"
+                        required
+                        error={form.touched.password && form.errors.password}
+                     />
+                  )}
             </div>
 
             <div className="row row-cols-2 my-5">
@@ -224,19 +258,19 @@ const SignUp = ({ redirect }) => {
                   {...form.getFieldProps("address.zip")}
                   type="text"
                   label="Zip"
-                  required
                   error={form.touched.address?.zip && form.errors.zip}
                />
             </div>
-
             <div className="form-check my-5">
                <input
-                  {...form.getFieldProps("isBusiness")}
+                  id="isBusiness"
                   className="form-check-input"
                   type="checkbox"
+                  onChange={() => setIsBusiness((isBusiness) => !isBusiness)}
+                  checked={isBusiness}
                />
-               <label className="form-check-label" htmlFor="flexCheckDefault">
-                  Sign up as business
+               <label className="form-check-label" htmlFor="isBusiness">
+                  {!user ? "Sign up as business " : "Business account"}
                </label>
             </div>
 
@@ -246,7 +280,7 @@ const SignUp = ({ redirect }) => {
                   disabled={!form.isValid}
                   className="btn btn-primary"
                >
-                  Sign up
+                  {!user ? "Sign up" : "Save changes"}
                </button>
             </div>
          </form>
@@ -254,4 +288,4 @@ const SignUp = ({ redirect }) => {
    );
 };
 
-export default SignUp;
+export default UserForm;

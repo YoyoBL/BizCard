@@ -11,8 +11,13 @@ const BusinessPage = () => {
 
    useEffect(() => {
       async function getCardsById() {
-         const response = await cardsService.getCard(id);
-         setCard(response.data);
+         try {
+            const response = await cardsService.getCard(id);
+
+            setCard(response.data);
+         } catch (err) {
+            console.log(err);
+         }
       }
       getCardsById();
    }, []);

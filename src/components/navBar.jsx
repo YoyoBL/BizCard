@@ -89,7 +89,7 @@ const NavBar = ({ value, onChange = () => {} }) => {
                            </NavLink>
                         </li>
                         <li className="nav-item total-center mx-3">
-                           <NavLink to={`/My-profile`}>
+                           <NavLink to="/my-profile">
                               <img
                                  src={userDetails?.image.url}
                                  alt={userDetails?.image.alt}

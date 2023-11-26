@@ -15,6 +15,8 @@ import AlertMessage from "./components/alertMessage";
 import { useAlert } from "./contexts/alert.context";
 import BusinessPage from "./components/businessPage";
 import CardForm from "./components/cardForm.jsx";
+import UserAccount from "./components/userAccount.jsx";
+import UserForm from "./components/userForm.jsx";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
@@ -57,6 +59,25 @@ function App() {
                      </ProtectedRoute>
                   }
                />
+
+               <Route
+                  path="/my-profile"
+                  element={
+                     <ProtectedRoute onlyBiz>
+                        <UserAccount />
+                     </ProtectedRoute>
+                  }
+               />
+
+               <Route
+                  path="/edit-profile"
+                  element={
+                     <ProtectedRoute onlyBiz>
+                        <UserForm redirect={"/"} />
+                     </ProtectedRoute>
+                  }
+               />
+
                <Route
                   path="/edit-card/:id"
                   element={

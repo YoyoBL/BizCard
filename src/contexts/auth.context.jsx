@@ -12,6 +12,7 @@ export const authContext = createContext({
    login: fn_error_context_must_be_used,
    logout: fn_error_context_must_be_used,
    signUp: fn_error_context_must_be_used,
+   updateUser: fn_error_context_must_be_used,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -44,15 +45,9 @@ export const AuthProvider = ({ children }) => {
       refreshUser();
    };
 
-   const getUserById = async () => {
-      try {
-         const response = await usersService.getUserById(
-            usersService.getUser()._id
-         );
-         return response;
-      } catch {
-         return null;
-      }
+   const updateUser = async (id, credentials) => {
+      usersService.updateUser(id, credentials);
+      refreshUser();
    };
 
    return (
@@ -62,6 +57,7 @@ export const AuthProvider = ({ children }) => {
             userDetails,
             login,
             logout,
+            updateUser,
             signUp: usersService.createUser,
          }}
       >

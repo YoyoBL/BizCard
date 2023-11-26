@@ -32,20 +32,16 @@ export function getJWT() {
 }
 
 export function getUser() {
-   try {
-      const token = getJWT();
-      return jwtDecode(token);
-   } catch {
-      return null;
-   }
+   const token = getJWT();
+   return jwtDecode(token);
 }
 
 function getUserById(id) {
-   try {
-      return httpServices.get(`users/${id}`);
-   } catch {
-      return null;
-   }
+   return httpServices.get(`users/${id}`);
+}
+
+function updateUser(id, values) {
+   return httpServices.put(`users/${id}`, values);
 }
 
 const usersService = {
@@ -54,6 +50,7 @@ const usersService = {
    logout,
    getUser,
    getUserById,
+   updateUser,
    getJWT,
 };
 
