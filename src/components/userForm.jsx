@@ -9,17 +9,18 @@ import Joi from "joi";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/auth.context";
 import { useAlert } from "../contexts/alert.context";
+import { filterEmptyKeys } from "../utils/filterEmptyKeys";
 
 const UserForm = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { user, userDetails, updateUser, signUp } = useAuth();
+   const { user, userDetails, updateUser, patchUserStatus, signUp } = useAuth();
    const { activateAlert } = useAlert();
 
    const [isBusiness, setIsBusiness] = useState(false);
 
    useEffect(() => {
-      if (!userDetails) return;
+      if (!user) return;
 
       form.setValues({
          name: {
@@ -46,7 +47,7 @@ const UserForm = () => {
    }, [userDetails]);
 
    const form = useFormik({
-      validateOnMount: true,
+      ...(!user && { validateOnMount: true }),
       initialValues: {
          name: {
             first: "",
@@ -68,7 +69,6 @@ const UserForm = () => {
             houseNumber: "",
             zip: "",
          },
-         ...(!user && { isBusiness: "" }),
       },
       validate: validateFormikUsingJoi({
          name: {
@@ -125,14 +125,20 @@ const UserForm = () => {
                .label("House number"),
             zip: Joi.string().min(1).max(10).required().label("Zip").allow(""),
          },
-         ...(!user && { isBusiness: Joi.boolean().required() }),
+         ...(!user && { isBusiness: "" }),
       }),
       async onSubmit(values) {
+         const filteredValues = filterEmptyKeys(values);
+
          try {
             if (user) {
-               await updateUser(user._id, values);
+               if (userDetails.isBusiness !== isBusiness) {
+                  await patchUserStatus(user._id);
+               }
+               await updateUser(user._id, filteredValues);
             } else {
-               await signUp(values);
+               const valuesWithBiz = { ...filteredValues, isBusiness };
+               await signUp(valuesWithBiz);
             }
             activateAlert(
                !user ? "User Created! Please log in" : "Changes saved"
@@ -185,14 +191,15 @@ const UserForm = () => {
                   required
                   error={form.touched.phone && form.errors.phone}
                />
-               {!user &&
-                  (<Input
-                     {...form.getFieldProps("email")}
-                     type="email"
-                     label="Email"
-                     required
-                     error={form.touched.email && form.errors.email}
-                  />)(
+               {!user && (
+                  <>
+                     <Input
+                        {...form.getFieldProps("email")}
+                        type="email"
+                        label="Email"
+                        required
+                        error={form.touched.email && form.errors.email}
+                     />
                      <Input
                         {...form.getFieldProps("password")}
                         type="password"
@@ -200,7 +207,8 @@ const UserForm = () => {
                         required
                         error={form.touched.password && form.errors.password}
                      />
-                  )}
+                  </>
+               )}
             </div>
 
             <div className="row row-cols-2 my-5">

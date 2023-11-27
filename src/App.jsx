@@ -63,7 +63,7 @@ function App() {
                <Route
                   path="/my-profile"
                   element={
-                     <ProtectedRoute onlyBiz>
+                     <ProtectedRoute>
                         <UserAccount />
                      </ProtectedRoute>
                   }
@@ -72,7 +72,7 @@ function App() {
                <Route
                   path="/edit-profile"
                   element={
-                     <ProtectedRoute onlyBiz>
+                     <ProtectedRoute>
                         <UserForm redirect={"/"} />
                      </ProtectedRoute>
                   }
@@ -88,10 +88,7 @@ function App() {
                />
                <Route path="/business-page/:id" element={<BusinessPage />} />
                <Route path="/sign-in" element={<SignIn redirect="/" />} />
-               <Route
-                  path="/sign-up"
-                  element={<SignUp redirect="/sign-in" />}
-               />
+               <Route path="/sign-up" element={<UserForm />} />
 
                <Route path="/sign-out" element={<SignOut redirect="/" />} />
             </Routes>

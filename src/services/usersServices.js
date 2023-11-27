@@ -33,6 +33,7 @@ export function getJWT() {
 
 export function getUser() {
    const token = getJWT();
+   if (!token) return;
    return jwtDecode(token);
 }
 
@@ -44,6 +45,10 @@ function updateUser(id, values) {
    return httpServices.put(`users/${id}`, values);
 }
 
+function patchUserStatus(id) {
+   return httpServices.patch(`users/${id}`);
+}
+
 const usersService = {
    createUser,
    login,
@@ -51,6 +56,7 @@ const usersService = {
    getUser,
    getUserById,
    updateUser,
+   patchUserStatus,
    getJWT,
 };
 
