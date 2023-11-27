@@ -48,7 +48,6 @@ export const AuthProvider = ({ children }) => {
 
    const updateUser = async (id, credentials) => {
       usersService.updateUser(id, credentials);
-      login({ email: userDetails.email });
       refreshUser();
    };
 

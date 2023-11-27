@@ -14,13 +14,14 @@ import { filterEmptyKeys } from "../utils/filterEmptyKeys";
 const UserForm = () => {
    const [serverError, setServerError] = useState("");
    const navigate = useNavigate();
-   const { user, userDetails, updateUser, patchUserStatus, signUp } = useAuth();
+   const { user, userDetails, updateUser, patchUserStatus, signUp, logout } =
+      useAuth();
    const { activateAlert } = useAlert();
 
    const [isBusiness, setIsBusiness] = useState(false);
 
    useEffect(() => {
-      if (!user) return;
+      if (!userDetails) return;
 
       form.setValues({
          name: {
@@ -42,7 +43,6 @@ const UserForm = () => {
             zip: String(userDetails.address.zip),
          },
       });
-
       setIsBusiness(userDetails.isBusiness);
    }, [userDetails]);
 
@@ -132,10 +132,15 @@ const UserForm = () => {
 
          try {
             if (user) {
+               await updateUser(user._id, filteredValues);
+
                if (userDetails.isBusiness !== isBusiness) {
                   await patchUserStatus(user._id);
+                  logout();
+                  navigate("/sign-in");
+                  activateAlert("Changes saved");
+                  return;
                }
-               await updateUser(user._id, filteredValues);
             } else {
                const valuesWithBiz = { ...filteredValues, isBusiness };
                await signUp(valuesWithBiz);
@@ -280,6 +285,14 @@ const UserForm = () => {
                <label className="form-check-label" htmlFor="isBusiness">
                   {!user ? "Sign up as business " : "Business account"}
                </label>
+
+               {userDetails?.isBusiness !== isBusiness && (
+                  <div className="alert alert-warning">
+                     <i className="bi bi-info-circle"></i>If you apply this
+                     modification, you will be required to sign in again for the
+                     changes to take effect.
+                  </div>
+               )}
             </div>
 
             <div className="text-center my-2">
