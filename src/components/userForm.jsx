@@ -19,6 +19,7 @@ const UserForm = () => {
    const { activateAlert } = useAlert();
 
    const [isBusiness, setIsBusiness] = useState(false);
+   const [statusChangeWarning, setStatusChangeWarning] = useState(false);
 
    useEffect(() => {
       if (!userDetails) return;
@@ -279,14 +280,21 @@ const UserForm = () => {
                   id="isBusiness"
                   className="form-check-input"
                   type="checkbox"
-                  onChange={() => setIsBusiness((isBusiness) => !isBusiness)}
+                  onChange={() => {
+                     setIsBusiness((isBusiness) => !isBusiness);
+                     if (user) {
+                        setStatusChangeWarning(
+                           (statusChangeWarning) => !statusChangeWarning
+                        );
+                     }
+                  }}
                   checked={isBusiness}
                />
                <label className="form-check-label" htmlFor="isBusiness">
                   {!user ? "Sign up as business " : "Business account"}
                </label>
 
-               {userDetails?.isBusiness !== isBusiness && (
+               {statusChangeWarning && (
                   <div className="alert alert-warning">
                      <i className="bi bi-info-circle"></i>If you apply this
                      modification, you will be required to sign in again for the
