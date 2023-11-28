@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
          setUserDetails(response.data);
       };
       getUserById();
-   }, [user]);
+   }, []);
 
    const refreshUser = () => {
       const user = usersService.getUser();
@@ -48,8 +48,8 @@ export const AuthProvider = ({ children }) => {
    };
 
    const updateUser = async (id, credentials) => {
-      usersService.updateUser(id, credentials);
-      refreshUser();
+      const response = await usersService.updateUser(id, credentials);
+      setUserDetails(response.data);
    };
 
    const patchUserStatus = async (id, credentials) => {
