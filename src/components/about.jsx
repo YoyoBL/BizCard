@@ -74,9 +74,9 @@ const About = () => {
                   <thead>
                      <tr>
                         <th style={{ width: "34%" }}></th>
-                        <th style={{ width: "22%" }}>Free</th>
-                        <th style={{ width: "22%" }}>Pro</th>
-                        <th style={{ width: "22%" }}>Enterprise</th>
+                        <th style={{ width: "22%" }}>No account</th>
+                        <th style={{ width: "22%" }}>Standard</th>
+                        <th style={{ width: "22%" }}>Business</th>
                      </tr>
                   </thead>
                   <tbody>

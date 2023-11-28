@@ -166,8 +166,8 @@ const UserForm = () => {
    return (
       <>
          <PageHeader
-            title="Sign Up"
-            description="Create an account and join our community! "
+            title={!user ? "Sign up" : "Edit profile"}
+            description={!user && "Create an account and join our community! "}
          />
 
          <form onSubmit={form.handleSubmit}>
@@ -307,15 +307,33 @@ const UserForm = () => {
                   </div>
                )}
             </div>
-
-            <div className="text-center my-2">
-               <button
-                  type="submit"
-                  disabled={!form.isValid}
-                  className="btn btn-primary"
-               >
-                  {!user ? "Sign up" : "Save changes"}
-               </button>
+            <div className="row">
+               <div className="col-12 text-center my-2">
+                  <button
+                     type="submit"
+                     disabled={!form.isValid}
+                     className="btn btn-primary w-100"
+                  >
+                     {!user ? "Sign up" : "Save changes"}
+                  </button>
+               </div>
+               <div className="col-6">
+                  <button
+                     type="reset"
+                     onClick={() => form.resetForm()}
+                     className="btn btn-warning w-100"
+                  >
+                     Reset
+                  </button>
+               </div>
+               <div className="col-6">
+                  <button
+                     onClick={() => navigate(!user ? "/" : "/my-profile")}
+                     className="btn btn-secondary w-100"
+                  >
+                     Cancel
+                  </button>
+               </div>
             </div>
          </form>
       </>

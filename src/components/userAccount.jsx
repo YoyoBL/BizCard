@@ -12,6 +12,8 @@ const UserAccount = () => {
 
    return (
       <div>
+         <PageHeader title={"My profile"} />
+
          <div className="row mt-3">
             <div className="col-auto col-md-4 hstack">
                <img
@@ -21,8 +23,6 @@ const UserAccount = () => {
                />
             </div>
             <div className="col p-3 d-flex flex-column justify-content-center">
-               <PageHeader title={"My profile"} />
-               <br />
                <ListTwoCols
                   title="Name"
                   content={[
@@ -51,8 +51,8 @@ const UserAccount = () => {
                   content={`${joinedAt.getDate()}-${joinedAt.getMonth()}-${joinedAt.getFullYear()}`}
                />
                <ListTwoCols
-                  title="Account type"
-                  content={userDetails.isBusiness ? "Business" : "Regular"}
+                  title="Account plan"
+                  content={userDetails.isBusiness ? "Business" : "Standard"}
                />
                <Link to={`/edit-profile`}>
                   <button className="btn btn-warning w-100">Edit</button>
