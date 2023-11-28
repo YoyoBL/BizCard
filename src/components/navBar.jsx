@@ -88,14 +88,19 @@ const NavBar = ({ value, onChange = () => {} }) => {
                   </li>
                   {user ? (
                      <>
-                        <li className="nav-item total-center mx-3">
+                        <li
+                           className="nav-item total-center mx-3"
+                           style={{
+                              width: "2rem",
+                           }}
+                        >
                            <NavLink to="/my-profile">
                               <img
                                  src={userDetails?.image.url}
                                  alt={userDetails?.image.alt}
-                                 className="rounded-bi-circle-fill"
+                                 className="rounded-circle"
                                  style={{
-                                    height: "1.5rem",
+                                    height: "2rem",
                                  }}
                               />
                            </NavLink>
@@ -104,6 +109,9 @@ const NavBar = ({ value, onChange = () => {} }) => {
                            <NavLink
                               to={"/sign-out"}
                               className="nav-link text-danger"
+                              style={{
+                                 fontSize: "0.9rem",
+                              }}
                            >
                               Sign out
                            </NavLink>

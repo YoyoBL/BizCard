@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
    useEffect(() => {
       const getUserById = async () => {
          if (!user) return setUserDetails(null);
+
          const response = await usersService.getUserById(user._id);
          setUserDetails(response.data);
       };
