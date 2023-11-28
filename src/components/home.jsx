@@ -29,15 +29,15 @@ const Home = ({ search = "" }) => {
          )}
 
          {!user && (
-            <div class="px-4 py-5 my-5 text-center shadow">
-               <h1 class="display-5 fw-semibold text-primary">
+            <div className="px-4 py-5 my-5 text-center shadow">
+               <h1 className="display-5 fw-semibold text-primary">
                   Welcome to{" "}
                   <div className="d-inline-block">
-                     Biz<i class="bi bi-person-vcard mx-1"></i>Card
+                     Biz<i className="bi bi-person-vcard mx-1"></i>Card
                   </div>
                </h1>
-               <div class="col-lg-6 mx-auto">
-                  <p class="lead mb-4">
+               <div className="col-lg-6 mx-auto">
+                  <p className="lead mb-4">
                      Unlock the full potential of your online presence! <br />
                      Join our dynamic community and dive into the world of
                      digital visit cards.
@@ -50,18 +50,18 @@ const Home = ({ search = "" }) => {
                      subscription for you. <br />
                      Let's connect and make lasting impressions together!
                   </p>
-                  <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                  <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
                      <button
                         type="button"
                         onClick={() => navigate("/sign-up")}
-                        class="btn btn-primary btn-lg px-4 gap-3"
+                        className="btn btn-primary btn-lg px-4 gap-3"
                      >
                         Sign up
                      </button>
                      <button
                         type="button"
                         onClick={() => navigate("/sign-in")}
-                        class="btn btn-outline-secondary btn-lg px-4"
+                        className="btn btn-outline-secondary btn-lg px-4"
                      >
                         Sign in
                      </button>

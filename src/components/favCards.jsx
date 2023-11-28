@@ -11,9 +11,11 @@ const FavCards = ({ search = "" }) => {
       const favorites = allCards.filter((card) => isFavorite(card.likes));
 
       if (search) {
-         return allCards.map((card) => {
-            return <Card card={card} key={card._id} />;
-         });
+         return favorites
+            .filter((card) => card.title.includes(search))
+            .map((card) => {
+               return <Card card={card} key={card._id} />;
+            });
       }
 
       return favorites.length ? (

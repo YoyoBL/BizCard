@@ -1,12 +1,19 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/auth.context";
 import { useColorMode } from "../hooks/useColorMode";
 
 import "../App.css";
+import { useState } from "react";
 
 const NavBar = ({ value, onChange = () => {} }) => {
    const { user, userDetails } = useAuth();
    const { switchColorMode } = useColorMode();
+
+   const location = useLocation();
+   const routesWithSearchInput = ["/", "/favorite-cards", "/my-cards"];
+   const shouldShowSearchInput = routesWithSearchInput.includes(
+      location.pathname
+   );
 
    return (
       <nav className="navbar navbar-expand-sm shadow-sm mb-3">
@@ -61,18 +68,20 @@ const NavBar = ({ value, onChange = () => {} }) => {
                </ul>
 
                <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
-                  <li>
-                     <div className="position-relative d-flex">
-                        <input
-                           type="text"
-                           onChange={(e) => onChange(e.target.value)}
-                           value={value}
-                           className="form-control"
-                           placeholder="Search..."
-                        />
-                        <i className="bi bi-search position-absolute end-0 p-2"></i>
-                     </div>
-                  </li>
+                  {shouldShowSearchInput && (
+                     <li>
+                        <div className="position-relative d-flex">
+                           <input
+                              type="text"
+                              onChange={(e) => onChange(e.target.value)}
+                              value={value}
+                              className="form-control"
+                              placeholder="Search..."
+                           />
+                           <i className="bi bi-search position-absolute end-0 p-2"></i>
+                        </div>
+                     </li>
+                  )}
 
                   <li className="mx-3">
                      <div className="form-check form-switch pt-2">

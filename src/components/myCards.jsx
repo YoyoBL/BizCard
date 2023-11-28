@@ -7,16 +7,18 @@ const MyCards = ({ search = "" }) => {
    const { allCards, isMyCard } = useCards();
 
    function displayCards() {
-      const MyCards = allCards.filter((card) => isMyCard(card.user_id));
+      const myCards = allCards.filter((card) => isMyCard(card.user_id));
 
       if (search) {
-         return allCards.map((card) => {
-            return <Card card={card} key={card._id} />;
-         });
+         return myCards
+            .filter((card) => card.title.includes(search))
+            .map((card) => {
+               return <Card card={card} key={card._id} />;
+            });
       }
 
-      return MyCards.length ? (
-         MyCards.map((card) => <Card card={card} key={card._id} />)
+      return myCards.length ? (
+         myCards.map((card) => <Card card={card} key={card._id} />)
       ) : (
          <div className="text-center mt-5">
             You don't have any Cards yet 😢
