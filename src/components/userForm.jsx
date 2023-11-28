@@ -36,12 +36,15 @@ const UserForm = () => {
             alt: userDetails.image.alt,
          },
          address: {
-            state: userDetails.address.state,
+            state:
+               userDetails.address.state === "not defined"
+                  ? ""
+                  : userDetails.address.state,
             country: userDetails.address.country,
             city: userDetails.address.city,
             street: userDetails.address.street,
             houseNumber: String(userDetails.address.houseNumber),
-            zip: String(userDetails.address.zip),
+            zip: userDetails.address.zip ? String(userDetails.address.zip) : "",
          },
       });
       setIsBusiness(userDetails.isBusiness);
@@ -125,7 +128,7 @@ const UserForm = () => {
                .required()
                .label("House number"),
             zip: Joi.number()
-               .min(1)
+               .min(0)
                .max(9999999999)
                .required()
                .label("Zip")
@@ -149,6 +152,7 @@ const UserForm = () => {
                }
             } else {
                const valuesWithBiz = { ...filteredValues, isBusiness };
+               console.log(valuesWithBiz);
                await signUp(valuesWithBiz);
             }
             activateAlert(
