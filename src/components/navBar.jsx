@@ -49,6 +49,11 @@ const NavBar = ({ value, onChange = () => {} }) => {
                         </NavLink>
                      </li>
                   )}
+                  <li className="nav-item">
+                     <NavLink to={"/contact"} className="nav-link">
+                        Contact
+                     </NavLink>
+                  </li>
                </ul>
 
                <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
@@ -83,11 +88,6 @@ const NavBar = ({ value, onChange = () => {} }) => {
                   </li>
                   {user ? (
                      <>
-                        <li className="nav-item">
-                           <NavLink to={"/sign-out"} className="nav-link">
-                              Sign out
-                           </NavLink>
-                        </li>
                         <li className="nav-item total-center mx-3">
                            <NavLink to="/my-profile">
                               <img
@@ -98,6 +98,14 @@ const NavBar = ({ value, onChange = () => {} }) => {
                                     height: "1.5rem",
                                  }}
                               />
+                           </NavLink>
+                        </li>
+                        <li className="nav-item">
+                           <NavLink
+                              to={"/sign-out"}
+                              className="nav-link text-danger"
+                           >
+                              Sign out
                            </NavLink>
                         </li>
                      </>

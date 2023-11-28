@@ -17,6 +17,7 @@ import BusinessPage from "./components/businessPage";
 import CardForm from "./components/cardForm.jsx";
 import UserAccount from "./components/userAccount.jsx";
 import UserForm from "./components/userForm.jsx";
+import Contact from "./components/contact.jsx";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
@@ -35,6 +36,7 @@ function App() {
             <Routes>
                <Route path="/" element={<Home search={searchInput} />} />
                <Route path="/about" element={<About />} />
+               <Route path="/contact" element={<Contact />} />
                <Route
                   path="/my-cards"
                   element={
