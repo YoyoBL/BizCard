@@ -28,9 +28,8 @@ function App() {
    }
    return (
       <div className="app d-flex flex-column min-vh-100">
-         <header className="pb-3">
-            <NavBar value={searchInput} onChange={handleSearchInputChange} />
-         </header>
+         <NavBar value={searchInput} onChange={handleSearchInputChange} />
+
          <main className="flex-fill container position-relative">
             {alertMessage && <AlertMessage />}
             <Routes>

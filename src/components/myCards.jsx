@@ -18,10 +18,12 @@ const MyCards = ({ search = "" }) => {
       return MyCards.length ? (
          MyCards.map((card) => <Card card={card} key={card._id} />)
       ) : (
-         <div>
+         <div className="text-center mt-5">
             You don't have any Cards yet 😢
             <br />
-            <Link to="/create-card">Go ahead and create one!⭐</Link>
+            <Link to="/create-card" className="lead">
+               Go ahead and create one!⭐
+            </Link>
          </div>
       );
    }

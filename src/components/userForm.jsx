@@ -119,12 +119,17 @@ const UserForm = () => {
             country: Joi.string().min(2).max(256).required().label("Country"),
             city: Joi.string().min(2).max(256).required().label("City"),
             street: Joi.string().min(2).max(256).required().label("Street"),
-            houseNumber: Joi.string()
+            houseNumber: Joi.number()
                .min(1)
-               .max(10)
+               .max(9999999999)
                .required()
                .label("House number"),
-            zip: Joi.string().min(1).max(10).required().label("Zip").allow(""),
+            zip: Joi.number()
+               .min(1)
+               .max(9999999999)
+               .required()
+               .label("Zip")
+               .allow(""),
          },
          ...(!user && { isBusiness: "" }),
       }),

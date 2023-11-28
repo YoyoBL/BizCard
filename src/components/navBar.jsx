@@ -9,11 +9,8 @@ const NavBar = ({ value, onChange = () => {} }) => {
    const { switchColorMode } = useColorMode();
 
    return (
-      <nav className="navbar navbar-expand-sm  shadow-sm">
+      <nav className="navbar navbar-expand-sm shadow-sm mb-3">
          <div className="container">
-            <NavLink to="/" className="navbar-brand">
-               Biz<i className="bi bi-person-vcard mx-1"></i>Card
-            </NavLink>
             <button
                className="navbar-toggler"
                type="button"
@@ -25,6 +22,11 @@ const NavBar = ({ value, onChange = () => {} }) => {
 
             <div className="collapse navbar-collapse" id="main-navbar">
                <ul className="navbar-nav nav-underline me-auto mb-2 mb-sm-0">
+                  <li className="total-center nav-item">
+                     <NavLink to="/" className="navbar-brand nav-link">
+                        Biz<i className="bi bi-person-vcard"></i>Card
+                     </NavLink>
+                  </li>
                   <li className="nav-item">
                      <NavLink to="/about" className="nav-link">
                         About
@@ -100,7 +102,7 @@ const NavBar = ({ value, onChange = () => {} }) => {
                               <img
                                  src={userDetails?.image.url}
                                  alt={userDetails?.image.alt}
-                                 className="rounded-circle"
+                                 className="rounded-circle img-fluid"
                                  style={{
                                     height: "2rem",
                                  }}

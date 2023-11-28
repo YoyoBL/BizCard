@@ -6,7 +6,6 @@ import { useCards } from "../contexts/cards.context";
 
 const FavCards = ({ search = "" }) => {
    const { allCards, isFavorite } = useCards();
-   const navigate = useNavigate();
 
    function displayCards() {
       const favorites = allCards.filter((card) => isFavorite(card.likes));
@@ -20,10 +19,10 @@ const FavCards = ({ search = "" }) => {
       return favorites.length ? (
          favorites.map((card) => <Card card={card} key={card._id} />)
       ) : (
-         <div>
-            You don have any favorites yet 😢
+         <div className="text-center mt-5">
+            You don't have any favorites yet 😢
             <br />
-            <Link to="/">
+            <Link to="/" className="lead">
                Go ahead and choose some by pressing the{" "}
                <i className="bi bi-heart"></i> icon
             </Link>

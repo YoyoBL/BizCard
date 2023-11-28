@@ -53,13 +53,12 @@ const Contact = () => {
             {serverError && (
                <div className="alert alert-danger">{serverError}</div>
             )}
-            <div className="row row-cols-1 justify-content-center">
+            <PageHeader
+               title="Contact us"
+               description="Feel free to contact us on any matter"
+            />
+            <div className="row row-cols-1 justify-content-center mt-4">
                <div className="col-md-6">
-                  <PageHeader
-                     title="Contact us"
-                     description="Feel free to contact us on any matter"
-                  />
-                  <hr />
                   <Input
                      {...form.getFieldProps("fullName")}
                      type="text"
