@@ -2,6 +2,8 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/auth.context";
 import { useColorMode } from "../hooks/useColorMode";
 
+import "../App.css";
+
 const NavBar = ({ value, onChange = () => {} }) => {
    const { user, userDetails } = useAuth();
    const { switchColorMode } = useColorMode();
@@ -9,9 +11,9 @@ const NavBar = ({ value, onChange = () => {} }) => {
    return (
       <nav className="navbar navbar-expand-sm  shadow-sm">
          <div className="container">
-            <Link to="/" className="navbar-brand">
-               Biz<i className="bi bi-person-vcard"></i>Card
-            </Link>
+            <NavLink to="/" className="navbar-brand">
+               Biz<i className="bi bi-person-vcard mx-1"></i>Card
+            </NavLink>
             <button
                className="navbar-toggler"
                type="button"
@@ -22,7 +24,7 @@ const NavBar = ({ value, onChange = () => {} }) => {
             </button>
 
             <div className="collapse navbar-collapse" id="main-navbar">
-               <ul className="navbar-nav me-auto mb-2 mb-sm-0">
+               <ul className="navbar-nav nav-underline me-auto mb-2 mb-sm-0">
                   <li className="nav-item">
                      <NavLink to="/about" className="nav-link">
                         About
@@ -125,7 +127,10 @@ const NavBar = ({ value, onChange = () => {} }) => {
                            </NavLink>
                         </li>
                         <li className="nav-item">
-                           <NavLink to={"/sign-up"} className="nav-link">
+                           <NavLink
+                              to={"/sign-up"}
+                              className="nav-link text-primary"
+                           >
                               Sign up
                            </NavLink>
                         </li>

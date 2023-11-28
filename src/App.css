@@ -36,3 +36,7 @@
 .fade-out {
    animation: fade-out 0.5s ease-in;
 }
+
+ul.nav-underline .nav-link.active {
+   border-bottom-color: #0d6efd;
+}
