@@ -77,19 +77,23 @@ const Card = ({ card }) => {
          </Link>
 
          <div className="card-footer hstack">
-            {isItMyCard && (
-               <Link
-                  onClick={() => (_id ? deleteCard(_id) : null)}
-                  className="card-link"
-               >
-                  <i className="bi bi-trash3 text-danger"></i>
-               </Link>
-            )}
-            {isItMyCard && (
-               <Link to={_id ? `/edit-card/${_id}` : ""} className="card-link">
-                  <i className="bi bi-pencil-square text-warning"></i>
-               </Link>
-            )}
+            {isItMyCard ||
+               (user?.isAdmin && (
+                  <>
+                     <Link
+                        onClick={() => (_id ? deleteCard(_id) : null)}
+                        className="card-link"
+                     >
+                        <i className="bi bi-trash3 text-danger"></i>
+                     </Link>
+                     <Link
+                        to={_id ? `/edit-card/${_id}` : ""}
+                        className="card-link"
+                     >
+                        <i className="bi bi-pencil-square text-warning"></i>
+                     </Link>
+                  </>
+               ))}
 
             {user && (
                <div className="ms-auto hstack gap-1">
