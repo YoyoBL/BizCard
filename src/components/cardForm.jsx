@@ -242,28 +242,34 @@ const CardForm = ({ forEditing = false }) => {
                   error={form.touched.address?.zip && form.errors.zip}
                />
             </div>
-            <div className="col-12 text-center my-4">
-               <button
-                  type="submit"
-                  className="btn btn-primary  mx-3"
-                  disabled={!form.isValid}
-               >
-                  {forEditing ? "Edit" : "Create"}
-               </button>
-               <button
-                  type="reset"
-                  onClick={() => form.resetForm()}
-                  className="btn btn-warning  mx-3"
-               >
-                  Reset fields
-               </button>
-               <button
-                  type="button"
-                  onClick={() => navigate("/my-cards")}
-                  className="btn btn-secondary "
-               >
-                  Cancel
-               </button>
+            <div className="row text-center my-4 g-3">
+               <div className="col-12">
+                  <button
+                     type="submit"
+                     className="btn btn-primary w-100"
+                     disabled={!form.isValid}
+                  >
+                     {forEditing ? "Save changes" : "Create"}
+                  </button>
+               </div>
+               <div className="col-6">
+                  <button
+                     type="reset"
+                     onClick={() => form.resetForm()}
+                     className="btn btn-warning w-100"
+                  >
+                     Reset fields
+                  </button>
+               </div>
+               <div className="col-6">
+                  <button
+                     type="button"
+                     onClick={() => navigate("/my-cards")}
+                     className="btn btn-secondary w-100"
+                  >
+                     Cancel
+                  </button>
+               </div>
             </div>
          </form>
       </>

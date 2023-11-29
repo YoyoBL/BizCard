@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
          setUserDetails(response.data);
       };
       getUserById();
-   }, []);
+   }, [user]);
 
    const refreshUser = () => {
       const user = usersService.getUser();

@@ -14,8 +14,8 @@ const UserAccount = () => {
       <div>
          <PageHeader title={"My profile"} />
 
-         <div className="row mt-3">
-            <div className="col-auto col-md-4 hstack">
+         <div className="row flex-column col-md-4 mx-auto mt-3">
+            <div className="col hstack">
                <img
                   src={userDetails.image.url}
                   alt={userDetails.image.alt}
