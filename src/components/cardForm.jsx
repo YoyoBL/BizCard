@@ -136,10 +136,6 @@ const CardForm = ({ forEditing = false }) => {
       <div className="d-flex flex-column">
          <PageHeader title={forEditing ? "Edit Card" : "Create a Card"} />
 
-         {serverError && (
-            <div className="alert alert-danger">{serverError}</div>
-         )}
-
          <div className="row">
             <div className="order-1 order-md-0 col-12 vstack col-md-6 rounded-5  d-flex justify-content-center align-items-center py-5 ">
                <h3 className="display-5">Card preview</h3>
@@ -150,6 +146,9 @@ const CardForm = ({ forEditing = false }) => {
                className="order-0 order-md-1 col-12 col-md-6"
                onSubmit={form.handleSubmit}
             >
+               {serverError && (
+                  <div className="alert alert-danger">{serverError}</div>
+               )}
                <div className="row row-cols-2">
                   <Input
                      {...form.getFieldProps("title")}

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/auth.context";
 import { useAlert } from "../contexts/alert.context";
 import { filterEmptyKeys } from "../utils/filterEmptyKeys";
+import ProfileCard from "./profileCard";
 
 const UserForm = () => {
    const [serverError, setServerError] = useState("");
@@ -174,172 +175,184 @@ const UserForm = () => {
             description={!user && "Create an account and join our community! "}
          />
 
-         <form onSubmit={form.handleSubmit}>
-            {serverError && (
-               <div className="alert alert-danger">{serverError}</div>
-            )}
-            <div className="row row-cols-2">
-               <Input
-                  {...form.getFieldProps("name.first")}
-                  type="text"
-                  label="First name"
-                  required
-                  error={form.touched.name?.first && form.errors.first}
-               />
-               <Input
-                  {...form.getFieldProps("name.middle")}
-                  type="text"
-                  label="middle name"
-                  error={form.touched.name?.middle && form.errors.middle}
-               />{" "}
-               <Input
-                  {...form.getFieldProps("name.last")}
-                  type="text"
-                  label="Last name"
-                  required
-                  error={form.touched.name?.last && form.errors.last}
-               />
-               <Input
-                  {...form.getFieldProps("phone")}
-                  type="string"
-                  label="Phone"
-                  required
-                  error={form.touched.phone && form.errors.phone}
-               />
-               {!user && (
-                  <>
-                     <Input
-                        {...form.getFieldProps("email")}
-                        type="email"
-                        label="Email"
-                        required
-                        error={form.touched.email && form.errors.email}
-                     />
-                     <Input
-                        {...form.getFieldProps("password")}
-                        type="password"
-                        label="Password"
-                        required
-                        error={form.touched.password && form.errors.password}
-                     />
-                  </>
+         <div className="row">
+            <div className="order-1 order-md-0 col-12 vstack col-md-6 rounded-5  d-flex justify-content-center align-items-center ">
+               <h3 className="display-5">Profile preview</h3>
+               <ProfileCard signUpFields={{ ...form.values, isBusiness }} />
+            </div>
+
+            <form
+               onSubmit={form.handleSubmit}
+               className="order-0 order-md-1 col-12 col-md-6"
+            >
+               {serverError && (
+                  <div className="alert alert-danger">{serverError}</div>
                )}
-            </div>
+               <div className="row row-cols-2">
+                  <Input
+                     {...form.getFieldProps("name.first")}
+                     type="text"
+                     label="First name"
+                     required
+                     error={form.touched.name?.first && form.errors.first}
+                  />
+                  <Input
+                     {...form.getFieldProps("name.middle")}
+                     type="text"
+                     label="middle name"
+                     error={form.touched.name?.middle && form.errors.middle}
+                  />{" "}
+                  <Input
+                     {...form.getFieldProps("name.last")}
+                     type="text"
+                     label="Last name"
+                     required
+                     error={form.touched.name?.last && form.errors.last}
+                  />
+                  <Input
+                     {...form.getFieldProps("phone")}
+                     type="string"
+                     label="Phone"
+                     required
+                     error={form.touched.phone && form.errors.phone}
+                  />
+                  {!user && (
+                     <>
+                        <Input
+                           {...form.getFieldProps("email")}
+                           type="email"
+                           label="Email"
+                           required
+                           error={form.touched.email && form.errors.email}
+                        />
+                        <Input
+                           {...form.getFieldProps("password")}
+                           type="password"
+                           label="Password"
+                           required
+                           error={form.touched.password && form.errors.password}
+                        />
+                     </>
+                  )}
+               </div>
 
-            <div className="row row-cols-2 my-5">
-               <Input
-                  {...form.getFieldProps("image.url")}
-                  type="text"
-                  label="Image url"
-               />
-               <Input
-                  {...form.getFieldProps("image.alt")}
-                  type="text"
-                  label="Image alt"
-               />
-            </div>
+               <div className="row row-cols-2 my-5">
+                  <Input
+                     {...form.getFieldProps("image.url")}
+                     type="text"
+                     label="Image url"
+                  />
+                  <Input
+                     {...form.getFieldProps("image.alt")}
+                     type="text"
+                     label="Image alt"
+                  />
+               </div>
 
-            <div className="row row-cols-2">
-               <Input
-                  {...form.getFieldProps("address.state")}
-                  type="text"
-                  label="State"
-                  error={form.touched.address?.state && form.errors.state}
-               />
-               <Input
-                  {...form.getFieldProps("address.country")}
-                  type="text"
-                  label="Country"
-                  required
-                  error={form.touched.address?.country && form.errors.country}
-               />
-               <Input
-                  {...form.getFieldProps("address.city")}
-                  type="text"
-                  label="City"
-                  required
-                  error={form.touched.address?.city && form.errors.city}
-               />
-               <Input
-                  {...form.getFieldProps("address.street")}
-                  type="text"
-                  label="Street"
-                  required
-                  error={form.touched.address?.street && form.errors.street}
-               />
-               <Input
-                  {...form.getFieldProps("address.houseNumber")}
-                  type="text"
-                  label="House number"
-                  required
-                  error={
-                     form.touched.address?.houseNumber &&
-                     form.errors.houseNumber
-                  }
-               />
-               <Input
-                  {...form.getFieldProps("address.zip")}
-                  type="text"
-                  label="Zip"
-                  error={form.touched.address?.zip && form.errors.zip}
-               />
-            </div>
-            <div className="form-check my-5">
-               <input
-                  id="isBusiness"
-                  className="form-check-input"
-                  type="checkbox"
-                  onChange={() => {
-                     setIsBusiness((isBusiness) => !isBusiness);
-                     if (user) {
-                        setStatusChangeWarning(
-                           (statusChangeWarning) => !statusChangeWarning
-                        );
+               <div className="row row-cols-2">
+                  <Input
+                     {...form.getFieldProps("address.state")}
+                     type="text"
+                     label="State"
+                     error={form.touched.address?.state && form.errors.state}
+                  />
+                  <Input
+                     {...form.getFieldProps("address.country")}
+                     type="text"
+                     label="Country"
+                     required
+                     error={
+                        form.touched.address?.country && form.errors.country
                      }
-                  }}
-                  checked={isBusiness}
-               />
-               <label className="form-check-label" htmlFor="isBusiness">
-                  {!user ? "Sign up as business " : "Business account"}
-               </label>
+                  />
+                  <Input
+                     {...form.getFieldProps("address.city")}
+                     type="text"
+                     label="City"
+                     required
+                     error={form.touched.address?.city && form.errors.city}
+                  />
+                  <Input
+                     {...form.getFieldProps("address.street")}
+                     type="text"
+                     label="Street"
+                     required
+                     error={form.touched.address?.street && form.errors.street}
+                  />
+                  <Input
+                     {...form.getFieldProps("address.houseNumber")}
+                     type="text"
+                     label="House number"
+                     required
+                     error={
+                        form.touched.address?.houseNumber &&
+                        form.errors.houseNumber
+                     }
+                  />
+                  <Input
+                     {...form.getFieldProps("address.zip")}
+                     type="text"
+                     label="Zip"
+                     error={form.touched.address?.zip && form.errors.zip}
+                  />
+               </div>
+               <div className="form-check my-5">
+                  <input
+                     id="isBusiness"
+                     className="form-check-input"
+                     type="checkbox"
+                     onChange={() => {
+                        setIsBusiness((isBusiness) => !isBusiness);
+                        if (user) {
+                           setStatusChangeWarning(
+                              (statusChangeWarning) => !statusChangeWarning
+                           );
+                        }
+                     }}
+                     checked={isBusiness}
+                  />
+                  <label className="form-check-label" htmlFor="isBusiness">
+                     {!user ? "Sign up as business " : "Business account"}
+                  </label>
 
-               {statusChangeWarning && (
-                  <div className="alert alert-warning">
-                     <i className="bi bi-info-circle"></i>If you apply this
-                     modification, you will be required to sign in again for the
-                     changes to take effect.
+                  {statusChangeWarning && (
+                     <div className="alert alert-warning">
+                        <i className="bi bi-info-circle"></i>If you apply this
+                        modification, you will be required to sign in again for
+                        the changes to take effect.
+                     </div>
+                  )}
+               </div>
+               <div className="row">
+                  <div className="col-12 text-center my-2">
+                     <button
+                        type="submit"
+                        disabled={!form.isValid}
+                        className="btn btn-primary w-100"
+                     >
+                        {!user ? "Sign up" : "Save changes"}
+                     </button>
                   </div>
-               )}
-            </div>
-            <div className="row">
-               <div className="col-12 text-center my-2">
-                  <button
-                     type="submit"
-                     disabled={!form.isValid}
-                     className="btn btn-primary w-100"
-                  >
-                     {!user ? "Sign up" : "Save changes"}
-                  </button>
+                  <div className="col-6">
+                     <button
+                        type="reset"
+                        onClick={() => form.resetForm()}
+                        className="btn btn-warning w-100"
+                     >
+                        Reset
+                     </button>
+                  </div>
+                  <div className="col-6">
+                     <button
+                        onClick={() => navigate(!user ? "/" : "/my-profile")}
+                        className="btn btn-secondary w-100"
+                     >
+                        Cancel
+                     </button>
+                  </div>
                </div>
-               <div className="col-6">
-                  <button
-                     type="reset"
-                     onClick={() => form.resetForm()}
-                     className="btn btn-warning w-100"
-                  >
-                     Reset
-                  </button>
-               </div>
-               <div className="col-6">
-                  <button
-                     onClick={() => navigate(!user ? "/" : "/my-profile")}
-                     className="btn btn-secondary w-100"
-                  >
-                     Cancel
-                  </button>
-               </div>
-            </div>
-         </form>
+            </form>
+         </div>
       </>
    );
 };

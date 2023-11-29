@@ -3,7 +3,6 @@ import NavBar from "./components/navBar";
 import Footer from "./components/footer";
 import About from "./components/about";
 import { Route, Routes } from "react-router-dom";
-import SignUp from "./components/signUp";
 import SignIn from "./components/signIn";
 import SignOut from "./components/sign-out";
 import Home from "./components/home";
@@ -15,7 +14,7 @@ import AlertMessage from "./components/alertMessage";
 import { useAlert } from "./contexts/alert.context";
 import BusinessPage from "./components/businessPage";
 import CardForm from "./components/cardForm.jsx";
-import UserAccount from "./components/userAccount.jsx";
+import ProfilePage from "./components/profilePage.jsx";
 import UserForm from "./components/userForm.jsx";
 import Contact from "./components/contact.jsx";
 import Sandbox from "./components/sandbox.jsx";
@@ -75,7 +74,7 @@ function App() {
                   path="/my-profile"
                   element={
                      <ProtectedRoute>
-                        <UserAccount />
+                        <ProfilePage />
                      </ProtectedRoute>
                   }
                />
