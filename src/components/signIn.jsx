@@ -5,7 +5,6 @@ import Joi from "joi";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../contexts/auth.context";
-import AlertMessage from "./alertMessage";
 import { useAlert } from "../contexts/alert.context";
 
 const SignIn = ({ redirect }) => {
@@ -79,7 +78,7 @@ const SignIn = ({ redirect }) => {
    return (
       <>
          <PageHeader title={"Sign In"} />
-         <form onSubmit={form.handleSubmit}>
+         <form onSubmit={form.handleSubmit} className="col-md-3 mx-auto ">
             {serverError && (
                <div className="alert alert-danger">{serverError}</div>
             )}
@@ -99,7 +98,7 @@ const SignIn = ({ redirect }) => {
             <button
                type="submit"
                disabled={!form.isValid}
-               className="btn btn-primary mt-2"
+               className="btn btn-primary mt-2 w-100"
             >
                Log-in
             </button>
