@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import cardsService from "../services/cardsService";
 import { useCards } from "../contexts/cards.context";
 import { useAlert } from "../contexts/alert.context";
+import Card from "./card";
 
 const CardForm = ({ forEditing = false }) => {
    const { id } = useParams();
@@ -131,148 +132,160 @@ const CardForm = ({ forEditing = false }) => {
          }
       },
    });
-
    return (
-      <>
+      <div className="d-flex flex-column">
          <PageHeader title={forEditing ? "Edit Card" : "Create a Card"} />
 
          {serverError && (
             <div className="alert alert-danger">{serverError}</div>
          )}
-         <form onSubmit={form.handleSubmit}>
-            <div className="row row-cols-2">
-               <Input
-                  {...form.getFieldProps("title")}
-                  type="text"
-                  label="Title"
-                  required
-                  error={form.touched.title && form.errors.title}
-               />
-               <Input
-                  {...form.getFieldProps("subtitle")}
-                  type="text"
-                  label="Subtitle"
-                  required
-                  error={form.touched.subtitle && form.errors.subtitle}
-               />
-               <Input
-                  {...form.getFieldProps("description")}
-                  type="text"
-                  label="Description"
-                  required
-                  error={form.touched.description && form.errors.description}
-               />
-               <Input
-                  {...form.getFieldProps("phone")}
-                  type="text"
-                  label="Phone"
-                  required
-                  error={form.touched.phone && form.errors.phone}
-               />
-               <Input
-                  {...form.getFieldProps("email")}
-                  type="text"
-                  label="Email"
-                  required
-                  error={form.touched.email && form.errors.email}
-               />
-               <Input
-                  {...form.getFieldProps("web")}
-                  type="text"
-                  label="Website"
-                  error={form.touched.web && form.errors.web}
-               />
+
+         <div className="row">
+            <div className="order-1 order-md-0 col-12 vstack col-md-6 rounded-5  d-flex justify-content-center align-items-center py-5 ">
+               <h3 className="display-5">Card preview</h3>
+               <Card card={form.values} />
             </div>
-            <div className="row row-cols-2 my-5">
-               <Input
-                  {...form.getFieldProps("image.url")}
-                  type="text"
-                  label="Picture Url"
-                  error={form.touched.image?.url && form.errors.url}
-               />
-               <Input
-                  {...form.getFieldProps("image.alt")}
-                  type="text"
-                  label="Picture Alt"
-                  error={form.touched.image?.alt && form.errors.alt}
-               />
-            </div>
-            <div className="row row-cols-2">
-               <Input
-                  {...form.getFieldProps("address.state")}
-                  type="text"
-                  label="State"
-                  error={form.touched.address?.state && form.errors.state}
-               />
-               <Input
-                  {...form.getFieldProps("address.country")}
-                  type="text"
-                  label="Country"
-                  required
-                  error={form.touched.address?.country && form.errors.country}
-               />
-               <Input
-                  {...form.getFieldProps("address.city")}
-                  type="text"
-                  label="City"
-                  required
-                  error={form.touched.address?.city && form.errors.city}
-               />
-               <Input
-                  {...form.getFieldProps("address.street")}
-                  type="text"
-                  label="Street"
-                  required
-                  error={form.touched.address?.street && form.errors.street}
-               />
-               <Input
-                  {...form.getFieldProps("address.houseNumber")}
-                  type="text"
-                  label="HouseNumber"
-                  required
-                  error={
-                     form.touched.address?.houseNumber &&
-                     form.errors.houseNumber
-                  }
-               />
-               <Input
-                  {...form.getFieldProps("address.zip")}
-                  type="number"
-                  label="Zip"
-                  error={form.touched.address?.zip && form.errors.zip}
-               />
-            </div>
-            <div className="row text-center my-4 g-3">
-               <div className="col-12">
-                  <button
-                     type="submit"
-                     className="btn btn-primary w-100"
-                     disabled={!form.isValid}
-                  >
-                     {forEditing ? "Save changes" : "Create"}
-                  </button>
+
+            <form
+               className="order-0 order-md-1 col-12 col-md-6"
+               onSubmit={form.handleSubmit}
+            >
+               <div className="row row-cols-2">
+                  <Input
+                     {...form.getFieldProps("title")}
+                     type="text"
+                     label="Title"
+                     required
+                     error={form.touched.title && form.errors.title}
+                  />
+                  <Input
+                     {...form.getFieldProps("subtitle")}
+                     type="text"
+                     label="Subtitle"
+                     required
+                     error={form.touched.subtitle && form.errors.subtitle}
+                  />
+                  <Input
+                     {...form.getFieldProps("description")}
+                     type="text"
+                     label="Description"
+                     required
+                     error={form.touched.description && form.errors.description}
+                  />
+                  <Input
+                     {...form.getFieldProps("phone")}
+                     type="text"
+                     label="Phone"
+                     required
+                     error={form.touched.phone && form.errors.phone}
+                  />
+                  <Input
+                     {...form.getFieldProps("email")}
+                     type="text"
+                     label="Email"
+                     required
+                     error={form.touched.email && form.errors.email}
+                  />
+                  <Input
+                     {...form.getFieldProps("web")}
+                     type="text"
+                     label="Website"
+                     error={form.touched.web && form.errors.web}
+                  />
                </div>
-               <div className="col-6">
-                  <button
-                     type="reset"
-                     onClick={() => form.resetForm()}
-                     className="btn btn-warning w-100"
-                  >
-                     Reset fields
-                  </button>
+               <div className="row row-cols-2 my-5">
+                  <Input
+                     {...form.getFieldProps("image.url")}
+                     type="text"
+                     label="Picture Url"
+                     error={form.touched.image?.url && form.errors.url}
+                  />
+                  <Input
+                     {...form.getFieldProps("image.alt")}
+                     type="text"
+                     label="Picture Alt"
+                     error={form.touched.image?.alt && form.errors.alt}
+                  />
                </div>
-               <div className="col-6">
-                  <button
-                     type="button"
-                     onClick={() => navigate("/my-cards")}
-                     className="btn btn-secondary w-100"
-                  >
-                     Cancel
-                  </button>
+               <div className="row row-cols-2">
+                  <Input
+                     {...form.getFieldProps("address.state")}
+                     type="text"
+                     label="State"
+                     error={form.touched.address?.state && form.errors.state}
+                  />
+                  <Input
+                     {...form.getFieldProps("address.country")}
+                     type="text"
+                     label="Country"
+                     required
+                     error={
+                        form.touched.address?.country && form.errors.country
+                     }
+                  />
+                  <Input
+                     {...form.getFieldProps("address.city")}
+                     type="text"
+                     label="City"
+                     required
+                     error={form.touched.address?.city && form.errors.city}
+                  />
+                  <Input
+                     {...form.getFieldProps("address.street")}
+                     type="text"
+                     label="Street"
+                     required
+                     error={form.touched.address?.street && form.errors.street}
+                  />
+                  <Input
+                     {...form.getFieldProps("address.houseNumber")}
+                     type="text"
+                     label="HouseNumber"
+                     required
+                     error={
+                        form.touched.address?.houseNumber &&
+                        form.errors.houseNumber
+                     }
+                  />
+                  <Input
+                     {...form.getFieldProps("address.zip")}
+                     type="number"
+                     label="Zip"
+                     error={form.touched.address?.zip && form.errors.zip}
+                  />
                </div>
-            </div>
-         </form>
-      </>
+               <div className="row text-center my-4 g-3">
+                  <div className="col-12">
+                     <button
+                        type="submit"
+                        className="btn btn-primary w-100"
+                        disabled={!form.isValid}
+                     >
+                        {forEditing ? "Save changes" : "Create"}
+                     </button>
+                  </div>
+                  <div className="col-6">
+                     <button
+                        type="reset"
+                        onClick={() => form.resetForm()}
+                        className="btn btn-warning w-100"
+                     >
+                        Reset fields
+                     </button>
+                  </div>
+                  <div className="col-6">
+                     <button
+                        type="button"
+                        onClick={() => navigate("/my-cards")}
+                        className="btn btn-secondary w-100"
+                     >
+                        Cancel
+                     </button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
    );
 };
 

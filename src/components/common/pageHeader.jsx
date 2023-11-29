@@ -2,7 +2,7 @@ const PageHeader = ({ title, description }) => {
    return (
       <>
          <header
-            className="row text-center flex-nowrap justify-content-center"
+            className="row text-center flex-nowrap justify-content-center mb-3"
             style={{ whiteSpace: "nowrap" }}
          >
             <div className="col-5 px-0 vstack">
