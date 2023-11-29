@@ -49,13 +49,23 @@ function patchUserStatus(id) {
    return httpServices.patch(`users/${id}`);
 }
 
+function getAllUsers() {
+   return httpServices.get(`users`);
+}
+
+function deleteUser(id) {
+   return httpServices.delete(`users/${id}`);
+}
+
 const usersService = {
    createUser,
    login,
    logout,
    getUser,
+   getAllUsers,
    getUserById,
    updateUser,
+   deleteUser,
    patchUserStatus,
    getJWT,
 };

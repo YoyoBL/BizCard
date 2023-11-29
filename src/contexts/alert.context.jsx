@@ -2,12 +2,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AlertContext = createContext({
-   alertMessage: "",
+   alertMessage: null,
    activateAlert: () => {},
+   modalContent: {},
+   setModalContent: () => {},
 });
 
 export const AlertProvider = ({ children }) => {
    const [alertMessage, setAlertMessage] = useState(false);
+   const [modalContent, setModalContent] = useState({
+      title: "Warning",
+      message: "",
+      btnText: "Save changes",
+      btnColor: "primary",
+      fnToDo: () => {},
+   });
 
    useEffect(() => {
       if (!alertMessage) return;
@@ -35,7 +44,14 @@ export const AlertProvider = ({ children }) => {
    }
 
    return (
-      <AlertContext.Provider value={{ alertMessage, activateAlert }}>
+      <AlertContext.Provider
+         value={{
+            alertMessage,
+            activateAlert,
+            modalContent,
+            setModalContent,
+         }}
+      >
          {children}
       </AlertContext.Provider>
    );

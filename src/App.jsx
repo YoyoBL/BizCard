@@ -18,6 +18,7 @@ import CardForm from "./components/cardForm.jsx";
 import UserAccount from "./components/userAccount.jsx";
 import UserForm from "./components/userForm.jsx";
 import Contact from "./components/contact.jsx";
+import Sandbox from "./components/sandbox.jsx";
 
 function App() {
    const [searchInput, setSearchInput] = useState("");
@@ -30,7 +31,7 @@ function App() {
       <div className="app d-flex flex-column min-vh-100">
          <NavBar value={searchInput} onChange={handleSearchInputChange} />
 
-         <main className="flex-fill container position-relative">
+         <main className="flex-fill container position-relative ">
             {alertMessage && <AlertMessage />}
             <Routes>
                <Route path="/" element={<Home search={searchInput} />} />
@@ -57,6 +58,15 @@ function App() {
                   element={
                      <ProtectedRoute onlyBiz>
                         <CardForm />
+                     </ProtectedRoute>
+                  }
+               />
+
+               <Route
+                  path="/sandbox"
+                  element={
+                     <ProtectedRoute OnlyAdmin>
+                        <Sandbox />
                      </ProtectedRoute>
                   }
                />

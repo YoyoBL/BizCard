@@ -14,6 +14,7 @@ export const authContext = createContext({
    signUp: fn_error_context_must_be_used,
    updateUser: fn_error_context_must_be_used,
    patchUserStatus: fn_error_context_must_be_used,
+   deleteUser: fn_error_context_must_be_used,
 });
 
 export const AuthProvider = ({ children }) => {
@@ -52,8 +53,8 @@ export const AuthProvider = ({ children }) => {
       setUserDetails(response.data);
    };
 
-   const patchUserStatus = async (id, credentials) => {
-      usersService.patchUserStatus(id, credentials);
+   const deleteUser = async (id) => {
+      return await usersService.deleteUser(id);
    };
 
    return (
@@ -64,7 +65,8 @@ export const AuthProvider = ({ children }) => {
             login,
             logout,
             updateUser,
-            patchUserStatus,
+            deleteUser,
+            patchUserStatus: usersService.patchUserStatus,
             signUp: usersService.createUser,
          }}
       >

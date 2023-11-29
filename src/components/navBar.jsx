@@ -60,11 +60,19 @@ const NavBar = ({ value, onChange = () => {} }) => {
                         </NavLink>
                      </li>
                   )}
-                  <li className="nav-item">
-                     <NavLink to={"/contact"} className="nav-link">
-                        Contact
-                     </NavLink>
-                  </li>
+                  {user?.isAdmin ? (
+                     <li className="nav-item">
+                        <NavLink to={"/sandbox"} className="nav-link">
+                           SANDBOX
+                        </NavLink>
+                     </li>
+                  ) : (
+                     <li className="nav-item">
+                        <NavLink to={"/contact"} className="nav-link">
+                           Contact
+                        </NavLink>
+                     </li>
+                  )}
                </ul>
 
                <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
