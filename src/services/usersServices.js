@@ -1,5 +1,4 @@
 import httpServices from "./httpServices";
-import httpService from "./httpServices";
 import { jwtDecode } from "jwt-decode";
 
 const TOKEN_KEY = "token";
@@ -7,15 +6,15 @@ const TOKEN_KEY = "token";
 refreshTokenHeader();
 
 export function refreshTokenHeader() {
-   httpService.setCommonHeader("x-auth-token", getJWT());
+   httpServices.setCommonHeader("x-auth-token", getJWT());
 }
 
 export function createUser(user) {
-   return httpService.post("/users", user);
+   return httpServices.post("/users", user);
 }
 
 export async function login(credentials) {
-   const response = await httpService.post("/users/login", credentials);
+   const response = await httpServices.post("/users/login", credentials);
 
    localStorage.setItem(TOKEN_KEY, response.data);
    refreshTokenHeader();
@@ -33,7 +32,7 @@ export function getJWT() {
 
 export function getUser() {
    const token = getJWT();
-   if (!token) return;
+   if (!token) return null;
    return jwtDecode(token);
 }
 

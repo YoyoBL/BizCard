@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
 
    const refreshUser = () => {
       const user = usersService.getUser();
+
       setUser(user);
    };
 

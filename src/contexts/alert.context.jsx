@@ -34,9 +34,13 @@ export const AlertProvider = ({ children }) => {
          }
       }
 
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
          getDiv();
       }, 2000);
+
+      return () => {
+         clearTimeout(timeoutId);
+      };
    }, [alertMessage]);
 
    function activateAlert(message) {

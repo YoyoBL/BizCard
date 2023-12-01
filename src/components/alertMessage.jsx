@@ -2,6 +2,7 @@ import { useAlert } from "../contexts/alert.context";
 
 const AlertMessage = () => {
    const { alertMessage } = useAlert();
+
    return (
       <div
          id="alert-message"

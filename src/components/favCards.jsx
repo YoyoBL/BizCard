@@ -1,5 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/auth.context";
+import { Link } from "react-router-dom";
 import Card from "./card";
 import PageHeader from "./common/pageHeader";
 import { useCards } from "../contexts/cards.context";

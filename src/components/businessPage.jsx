@@ -8,6 +8,7 @@ import ListTwoCols from "./common/listTwoCols";
 const BusinessPage = () => {
    const { id } = useParams();
    const [card, setCard] = useState(null);
+   const [serverError, setServerError] = useState("");
 
    useEffect(() => {
       async function getCardsById() {
@@ -16,18 +17,20 @@ const BusinessPage = () => {
 
             setCard(response.data);
          } catch (err) {
-            console.log(err);
+            setServerError(err);
          }
       }
       getCardsById();
-   }, []);
+   }, [id]);
 
    if (!card) return;
 
    return (
       <>
-         <PageHeader title={card.title} description={card.subtitle} />
          <div className="row mt-3">
+            {serverError && (
+               <div className="alert alert-danger">{serverError}</div>
+            )}
             <div className="col-auto col-md-6 hstack">
                <img
                   src={card.image.url}
@@ -36,6 +39,7 @@ const BusinessPage = () => {
                />
             </div>
             <div className="col p-3 d-flex flex-column justify-content-center">
+               <PageHeader title={card.title} description={card.subtitle} />
                <ListTwoCols title="Description" content={card.description} />
                <ListTwoCols title="Phone" content={card.phone} />
                <ListTwoCols title="Email" content={card.email} />

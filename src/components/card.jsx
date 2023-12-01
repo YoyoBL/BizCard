@@ -35,6 +35,7 @@ const Card = ({ card }) => {
       favorite = "true";
       isItMyCard = true;
    }
+
    return (
       <div
          className="card px-0 rounded-4 card-hover justify-content-between"

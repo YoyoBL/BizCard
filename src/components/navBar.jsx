@@ -3,9 +3,8 @@ import { useAuth } from "../contexts/auth.context";
 import { useColorMode } from "../hooks/useColorMode";
 
 import "../App.css";
-import { useState } from "react";
 
-const NavBar = ({ value, onChange = () => {} }) => {
+const NavBar = ({ searchValue, onChange = () => {} }) => {
    const { user, userDetails } = useAuth();
    const { switchColorMode } = useColorMode();
 
@@ -82,7 +81,7 @@ const NavBar = ({ value, onChange = () => {} }) => {
                            <input
                               type="text"
                               onChange={(e) => onChange(e.target.value)}
-                              value={value}
+                              value={searchValue}
                               className="form-control"
                               placeholder="Search..."
                            />

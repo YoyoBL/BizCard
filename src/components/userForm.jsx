@@ -153,7 +153,6 @@ const UserForm = () => {
                }
             } else {
                const valuesWithBiz = { ...filteredValues, isBusiness };
-               console.log(valuesWithBiz);
                await signUp(valuesWithBiz);
             }
             activateAlert(
@@ -178,7 +177,7 @@ const UserForm = () => {
          <div className="row">
             <div className="order-1 order-md-0 col-12 vstack col-md-6 rounded-5  d-flex justify-content-center align-items-center ">
                <h3 className="display-5">Profile preview</h3>
-               <ProfileCard signUpFields={{ ...form.values, isBusiness }} />
+               <ProfileCard userFormInputs={{ ...form.values, isBusiness }} />
             </div>
 
             <form

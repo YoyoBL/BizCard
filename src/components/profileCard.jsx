@@ -1,37 +1,39 @@
 import { useAuth } from "../contexts/auth.context";
 import ListTwoCols from "./common/listTwoCols";
-import { Link } from "react-router-dom";
 
-const ProfileCard = ({ signUpFields = null }) => {
+const ProfileCard = ({ userFormInputs = null }) => {
    const { userDetails } = useAuth();
 
    function userDetailsAndDefaults() {
       const image = {
          url:
-            signUpFields?.image.url ||
+            userFormInputs?.image.url ||
             userDetails?.image.url ||
             "https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805_960_720.png",
          alt:
-            signUpFields?.image.alt ||
+            userFormInputs?.image.alt ||
             userDetails?.image.alt ||
             "Default user avatar",
       };
       const name = {
-         first: signUpFields?.name.first || userDetails?.name.first,
-         middle: signUpFields?.name.middle || userDetails?.name.middle,
-         last: signUpFields?.name.last || userDetails?.name.last,
+         first: userFormInputs?.name.first || userDetails?.name.first,
+         middle: userFormInputs?.name.middle || userDetails?.name.middle,
+         last: userFormInputs?.name.last || userDetails?.name.last,
       };
-      const phone = signUpFields?.phone || userDetails?.phone;
-      const email = signUpFields?.email || userDetails?.email;
+      const phone = userFormInputs?.phone || userDetails?.phone;
+      const email = userFormInputs?.email || userDetails?.email;
       const address = {
-         street: signUpFields?.address.street || userDetails?.address.street,
+         street: userFormInputs?.address.street || userDetails?.address.street,
          houseNumber:
-            signUpFields?.address.houseNumber ||
+            userFormInputs?.address.houseNumber ||
             userDetails?.address.houseNumber,
-         city: signUpFields?.address.city || userDetails?.address.city,
-         zip: signUpFields?.address.zip || userDetails?.address.zip,
+         city: userFormInputs?.address.city || userDetails?.address.city,
+         zip: userFormInputs?.address.zip || userDetails?.address.zip,
       };
-      const isBusiness = signUpFields?.isBusiness || userDetails?.isBusiness;
+      const isBusiness =
+         userFormInputs?.isBusiness === false || true
+            ? userFormInputs?.isBusiness
+            : userDetails?.isBusiness;
 
       const joinedAt = new Date(userDetails?.createdAt || new Date());
 
@@ -47,8 +49,6 @@ const ProfileCard = ({ signUpFields = null }) => {
    }
    const { image, name, phone, email, address, isBusiness, joinedAt } =
       userDetailsAndDefaults();
-
-   console.log(image);
 
    return (
       <div className="row flex-column col mx-auto col-md-7">

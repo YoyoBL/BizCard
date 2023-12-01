@@ -7,8 +7,7 @@ export const useColorMode = () => {
       setColorMode((colorMode) => (colorMode === "light" ? "dark" : "light"));
       document.querySelector("body").setAttribute("data-bs-theme", colorMode);
 
-      document.querySelector("#footer").classList.toggle("bg-light");
-      document.querySelector("#footer").classList.toggle("bg-dark");
+      //
    }
 
    return {

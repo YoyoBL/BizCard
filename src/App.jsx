@@ -28,7 +28,7 @@ function App() {
    }
    return (
       <div className="app d-flex flex-column min-vh-100">
-         <NavBar value={searchInput} onChange={handleSearchInputChange} />
+         <NavBar searchValue={searchInput} onChange={handleSearchInputChange} />
 
          <main className="flex-fill container position-relative ">
             {alertMessage && <AlertMessage />}
