@@ -3,10 +3,23 @@ import { useAuth } from "../contexts/auth.context";
 import { useColorMode } from "../hooks/useColorMode";
 
 import "../App.css";
+import { useEffect } from "react";
 
 const NavBar = ({ searchValue, onChange = () => {} }) => {
-   const { user, userDetails } = useAuth();
+   const { user, userDetails, getUserById } = useAuth();
    const { switchColorMode } = useColorMode();
+
+   useEffect(() => {
+      async function getUserProfileImage() {
+         if (!user) return;
+         try {
+            await getUserById();
+         } catch {
+            return null;
+         }
+      }
+      getUserProfileImage();
+   }, [user]);
 
    const location = useLocation();
    const routesWithSearchInput = ["/", "/favorite-cards", "/my-cards"];

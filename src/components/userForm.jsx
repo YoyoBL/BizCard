@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useFormik } from "formik";
 import Joi from "joi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../contexts/auth.context";
 import { useAlert } from "../contexts/alert.context";
 import { filterEmptyKeys } from "../utils/filterEmptyKeys";
@@ -19,37 +19,10 @@ const UserForm = () => {
       useAuth();
    const { activateAlert } = useAlert();
 
-   const [isBusiness, setIsBusiness] = useState(false);
+   const [isBusiness, setIsBusiness] = useState(
+      userDetails?.isBusiness ?? false
+   );
    const [statusChangeWarning, setStatusChangeWarning] = useState(false);
-
-   useEffect(() => {
-      if (!userDetails) return;
-
-      form.setValues({
-         name: {
-            first: userDetails.name.first,
-            middle: userDetails.name.middle,
-            last: userDetails.name.last,
-         },
-         phone: userDetails.phone,
-         image: {
-            url: userDetails.image.url,
-            alt: userDetails.image.alt,
-         },
-         address: {
-            state:
-               userDetails.address.state === "not defined"
-                  ? ""
-                  : userDetails.address.state,
-            country: userDetails.address.country,
-            city: userDetails.address.city,
-            street: userDetails.address.street,
-            houseNumber: String(userDetails.address.houseNumber),
-            zip: userDetails.address.zip ? String(userDetails.address.zip) : "",
-         },
-      });
-      setIsBusiness(userDetails.isBusiness);
-   }, [userDetails]);
 
    const form = useFormik({
       ...(!user && { validateOnMount: true }),
@@ -111,7 +84,7 @@ const UserForm = () => {
 
          image: {
             url: Joi.string().uri().required().allow("").label("Image url"),
-            alt: Joi.string().max(40).allow("").label("Image alt"),
+            alt: Joi.string().min(2).max(40).allow("").label("Image alt"),
          },
          address: {
             state: Joi.string()
@@ -166,6 +139,31 @@ const UserForm = () => {
          }
       },
    });
+
+   //if profile edit - load existing user details
+   if (userDetails) {
+      form.values.name = {
+         first: userDetails.name.first,
+         middle: userDetails.name.middle,
+         last: userDetails.name.last,
+      };
+      form.values.phone = userDetails.phone;
+      form.values.image = {
+         url: userDetails.image.url,
+         alt: userDetails.image.alt,
+      };
+      form.values.address = {
+         state:
+            userDetails.address.state === "not defined"
+               ? ""
+               : userDetails.address.state,
+         country: userDetails.address.country,
+         city: userDetails.address.city,
+         street: userDetails.address.street,
+         houseNumber: String(userDetails.address.houseNumber),
+         zip: userDetails.address.zip ? String(userDetails.address.zip) : "",
+      };
+   }
 
    return (
       <>
@@ -240,11 +238,13 @@ const UserForm = () => {
                      {...form.getFieldProps("image.url")}
                      type="text"
                      label="Image url"
+                     error={form.touched.image?.url && form.errors.url}
                   />
                   <Input
                      {...form.getFieldProps("image.alt")}
                      type="text"
                      label="Image alt"
+                     error={form.touched.image?.alt && form.errors.alt}
                   />
                </div>
 

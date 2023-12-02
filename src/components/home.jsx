@@ -1,7 +1,6 @@
 import PageHeader from "./common/pageHeader";
 import Card from "./card";
 import { useCards } from "../contexts/cards.context";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Home = ({ search = "" }) => {
@@ -71,7 +70,7 @@ const Home = ({ search = "" }) => {
          )}
 
          <div className="row justify-content-evenly mt-3 gap-3">
-            {!allCards.length ? <p>no cards...</p> : displayCards()}
+            {!allCards?.length ? <p>no cards...</p> : displayCards()}
          </div>
       </>
    );

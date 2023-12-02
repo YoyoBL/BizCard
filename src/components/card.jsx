@@ -6,35 +6,64 @@ const Card = ({ card }) => {
    const { user, isFavorite, isMyCard, AddToFavorites, deleteCard } =
       useCards();
 
-   const _id = card?._id || 0;
-   const title = card?.title || "title";
-   const subtitle = card?.subtitle || "subtitle";
-   const image = {
-      url:
-         card?.image.url ||
-         "https://cdn.pixabay.com/photo/2016/04/20/08/21/entrepreneur-1340649_960_720.jpg",
-      alt: card?.image.alt || "default image",
-   };
-   const address = {
-      street: card?.address.street || "My-street",
-      houseNumber: card?.address.houseNumber || "0",
-      city: card?.address.city || "My-city",
-      zip: card?.address.zip || "",
-   };
-   const phone = card?.phone || "0520000000";
+   function setCardDetailsOrDefaults() {
+      const _id = card?._id || 0;
+      const title = card?.title || "title";
+      const subtitle = card?.subtitle || "subtitle";
+      const image = {
+         url:
+            card?.image.url ||
+            "https://cdn.pixabay.com/photo/2016/04/20/08/21/entrepreneur-1340649_960_720.jpg",
+         alt: card?.image.alt || "default image",
+      };
+      const address = {
+         street: card?.address.street || "My-street",
+         houseNumber: card?.address.houseNumber || "0",
+         city: card?.address.city || "My-city",
+         zip: card?.address.zip || "",
+         state: card?.address.state || "",
+      };
+      const phone = card?.phone || "0520000000";
 
-   const likes = card?.likes || "likes";
-   const user_id = card?.user_id || 0;
+      const likes = card?.likes || "likes";
+      const user_id = card?.user_id || 0;
 
-   let favorite = null;
-   let isItMyCard = null;
-   if (_id) {
-      favorite = !user ? null : isFavorite(likes);
-      isItMyCard = !user ? null : isMyCard(user_id);
-   } else {
-      favorite = "true";
-      isItMyCard = true;
+      let favorite = null;
+      let isItMyCard = null;
+      if (card) {
+         favorite = !user ? null : isFavorite(likes);
+         isItMyCard = !user ? null : isMyCard(user_id);
+      } else {
+         //for card preview
+         favorite = "true";
+         isItMyCard = true;
+      }
+      return {
+         _id,
+         title,
+         subtitle,
+         image,
+         address,
+         phone,
+         likes,
+         user_id,
+         favorite,
+         isItMyCard,
+      };
    }
+
+   const {
+      _id,
+      title,
+      subtitle,
+      image,
+      address,
+      phone,
+      likes,
+      user_id,
+      favorite,
+      isItMyCard,
+   } = setCardDetailsOrDefaults();
 
    return (
       <div
@@ -65,6 +94,7 @@ const Card = ({ card }) => {
                            address.houseNumber,
                            address.city,
                            address.zip,
+                           address.state,
                         ]
                            .filter(Boolean)
                            .join(" ")}
@@ -78,23 +108,22 @@ const Card = ({ card }) => {
          </Link>
 
          <div className="card-footer hstack">
-            {isItMyCard ||
-               (user?.isAdmin && (
-                  <>
-                     <Link
-                        onClick={() => (_id ? deleteCard(_id) : null)}
-                        className="card-link"
-                     >
-                        <i className="bi bi-trash3 text-danger"></i>
-                     </Link>
-                     <Link
-                        to={_id ? `/edit-card/${_id}` : ""}
-                        className="card-link"
-                     >
-                        <i className="bi bi-pencil-square text-warning"></i>
-                     </Link>
-                  </>
-               ))}
+            {(isItMyCard || user?.isAdmin) && (
+               <>
+                  <Link
+                     onClick={() => (_id ? deleteCard(_id) : null)}
+                     className="card-link"
+                  >
+                     <i className="bi bi-trash3 text-danger"></i>
+                  </Link>
+                  <Link
+                     to={_id ? `/edit-card/${_id}` : ""}
+                     className="card-link"
+                  >
+                     <i className="bi bi-pencil-square text-warning"></i>
+                  </Link>
+               </>
+            )}
 
             {user && (
                <div className="ms-auto hstack gap-1">
@@ -102,7 +131,7 @@ const Card = ({ card }) => {
                      className={favorite ? "text-danger" : "text-muted"}
                      style={{ fontSize: "0.9rem" }}
                   >
-                     {likes?.length || 5}
+                     {likes.length ?? 5}
                   </span>
                   <Link
                      onClick={() => (_id ? AddToFavorites(_id) : null)}

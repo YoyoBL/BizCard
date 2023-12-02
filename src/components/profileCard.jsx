@@ -30,10 +30,7 @@ const ProfileCard = ({ userFormInputs = null }) => {
          city: userFormInputs?.address.city || userDetails?.address.city,
          zip: userFormInputs?.address.zip || userDetails?.address.zip,
       };
-      const isBusiness =
-         userFormInputs?.isBusiness === false || true
-            ? userFormInputs?.isBusiness
-            : userDetails?.isBusiness;
+      const isBusiness = userFormInputs?.isBusiness ?? userDetails?.isBusiness;
 
       const joinedAt = new Date(userDetails?.createdAt || new Date());
 

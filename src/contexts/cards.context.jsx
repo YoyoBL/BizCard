@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import cardsService from "../services/cardsService";
 import { useAuth } from "./auth.context";
 
@@ -18,16 +18,16 @@ const cardsContext = createContext({
 
 export const CardsProvider = ({ children }) => {
    const { user } = useAuth();
-   const [allCards, setAllCards] = useState([]);
-
-   async function getAllCardsFromApi() {
-      const { data } = await cardsService.getAll().catch(() => {});
-      setAllCards(data);
-   }
+   const [allCards, setAllCards] = useState(null);
 
    useEffect(() => {
       getAllCardsFromApi();
    }, []);
+
+   async function getAllCardsFromApi() {
+      const { data } = await cardsService.getAll();
+      setAllCards(data);
+   }
 
    function isFavorite(likes) {
       return likes.includes(user._id);

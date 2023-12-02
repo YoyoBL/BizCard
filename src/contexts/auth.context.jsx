@@ -9,6 +9,7 @@ const fn_error_context_must_be_used = () => {
 export const authContext = createContext({
    user: null,
    userDetails: null,
+   getUserById: fn_error_context_must_be_used,
    login: fn_error_context_must_be_used,
    logout: fn_error_context_must_be_used,
    signUp: fn_error_context_must_be_used,
@@ -22,14 +23,13 @@ export const AuthProvider = ({ children }) => {
    const [userDetails, setUserDetails] = useState(null);
 
    useEffect(() => {
-      const getUserById = async () => {
-         if (!user) return setUserDetails(null);
-
-         const response = await usersService.getUserById(user._id);
-         setUserDetails(response.data);
-      };
-      getUserById();
+      if (!user) return setUserDetails(null);
    }, [user]);
+
+   const getUserById = async () => {
+      const response = await usersService.getUserById(user._id);
+      setUserDetails(response.data);
+   };
 
    const refreshUser = () => {
       const user = usersService.getUser();
@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }) => {
          value={{
             user,
             userDetails,
+            getUserById,
             login,
             logout,
             updateUser,

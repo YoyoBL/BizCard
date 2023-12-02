@@ -2,7 +2,7 @@ import { validateFormikUsingJoi } from "../utils/validateFormikUsingJoi";
 import Input from "./common/input";
 import PageHeader from "./common/pageHeader";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { useFormik } from "formik";
 import Joi from "joi";
@@ -11,6 +11,7 @@ import cardsService from "../services/cardsService";
 import { useCards } from "../contexts/cards.context";
 import { useAlert } from "../contexts/alert.context";
 import Card from "./card";
+import { filterEmptyKeys } from "../utils/filterEmptyKeys";
 
 const CardForm = ({ forEditing = false }) => {
    const { id } = useParams();
@@ -19,8 +20,11 @@ const CardForm = ({ forEditing = false }) => {
    const { createCard, editCard } = useCards();
    const { activateAlert } = useAlert();
 
+   //track if moved from edit to create page
+   const location = useLocation();
+
    useEffect(() => {
-      if (!forEditing) return;
+      if (!forEditing) return form.resetForm();
       async function setFieldsByCard() {
          try {
             const { data } = await cardsService.getCard(id);
@@ -30,7 +34,7 @@ const CardForm = ({ forEditing = false }) => {
                description: data.description,
                phone: data.phone,
                email: data.email,
-               web: data.web,
+               web: data.web || "",
                image: {
                   url: data.image?.url,
                   alt: data.image?.alt,
@@ -49,7 +53,7 @@ const CardForm = ({ forEditing = false }) => {
          }
       }
       setFieldsByCard();
-   }, []);
+   }, [location]);
 
    const form = useFormik({
       validateOnMount: true,
@@ -113,15 +117,14 @@ const CardForm = ({ forEditing = false }) => {
          },
       }),
       async onSubmit(values) {
-         if (!values.address.zip) {
-            values.address.zip = 0;
-         }
+         const filteredValues = filterEmptyKeys(values);
+
          try {
             if (forEditing) {
-               await editCard(id, values);
+               await editCard(id, filteredValues);
                activateAlert("Card edited!");
             } else {
-               await createCard(values);
+               await createCard(filteredValues);
                activateAlert("Card created!");
             }
             navigate("/my-cards");
@@ -248,7 +251,7 @@ const CardForm = ({ forEditing = false }) => {
                   />
                   <Input
                      {...form.getFieldProps("address.zip")}
-                     type="number"
+                     type="text"
                      label="Zip"
                      error={form.touched.address?.zip && form.errors.zip}
                   />

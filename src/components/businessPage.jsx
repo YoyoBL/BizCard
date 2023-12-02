@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useCards } from "../contexts/cards.context";
 import { useEffect, useState } from "react";
 import cardsService from "../services/cardsService";
 import PageHeader from "./common/pageHeader";
@@ -43,7 +42,7 @@ const BusinessPage = () => {
                <ListTwoCols title="Description" content={card.description} />
                <ListTwoCols title="Phone" content={card.phone} />
                <ListTwoCols title="Email" content={card.email} />
-               <ListTwoCols title="Web" content={card.web} />
+               {card.web && <ListTwoCols title="Web" content={card.web} />}
                <ListTwoCols
                   title="Address"
                   content={[
