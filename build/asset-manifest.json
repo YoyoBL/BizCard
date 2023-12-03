@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/BizCard/static/css/main.b4fbad74.css",
-    "main.js": "/BizCard/static/js/main.7a468eb0.js",
+    "main.css": "/BizCard/static/css/main.5941bf97.css",
+    "main.js": "/BizCard/static/js/main.fb19a73c.js",
     "static/js/787.e66666a5.chunk.js": "/BizCard/static/js/787.e66666a5.chunk.js",
     "static/media/bootstrap-icons.woff?": "/BizCard/static/media/bootstrap-icons.449ad8adf6ae0424b7ed.woff",
     "static/media/bootstrap-icons.woff2?": "/BizCard/static/media/bootstrap-icons.dea24bf5a7646d8b84e7.woff2",
     "index.html": "/BizCard/index.html",
-    "main.b4fbad74.css.map": "/BizCard/static/css/main.b4fbad74.css.map",
-    "main.7a468eb0.js.map": "/BizCard/static/js/main.7a468eb0.js.map",
+    "main.5941bf97.css.map": "/BizCard/static/css/main.5941bf97.css.map",
+    "main.fb19a73c.js.map": "/BizCard/static/js/main.fb19a73c.js.map",
     "787.e66666a5.chunk.js.map": "/BizCard/static/js/787.e66666a5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b4fbad74.css",
-    "static/js/main.7a468eb0.js"
+    "static/css/main.5941bf97.css",
+    "static/js/main.fb19a73c.js"
   ]
 }
